@@ -6,7 +6,7 @@ Two dashboards on access to electricity in Africa, built from public data, with 
 
 | Dashboard | What it shows |
 |---|---|
-| [Sénégal : énergie en chiffres](https://dibimaiga.github.io/energy-poverty-dashboards/senegal/) (in French) | Access to electricity in cities and rural areas since 2000, the power mix, prices and outages, and the move to domestic gas. |
+| [Senegal: energy in numbers](https://dibimaiga.github.io/energy-poverty-dashboards/senegal/) | Access to electricity in cities and rural areas since 2000, the power mix, prices and outages, and the move to domestic gas. |
 | [Energy poverty scorecard: sub-Saharan Africa](https://dibimaiga.github.io/energy-poverty-dashboards/scorecard/) | The region's 48 countries ranked on seven criteria, with weights you can adjust. |
 
 A few figures from the 2024 data:

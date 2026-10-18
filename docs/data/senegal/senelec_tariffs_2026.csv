@@ -1,0 +1,7 @@
+key,category,band,range,price_fcfa_kwh
+DPP-1,Households (DPP),1,0–150 kWh,82.0
+DPP-2,Households (DPP),2,151–250 kWh,136.49
+DPP-3,Households (DPP),3,Over 250 kWh,159.36
+PPP-1,Small businesses (PPP),1,0–50 kWh,147.43
+PPP-2,Small businesses (PPP),2,51–500 kWh,189.84
+PPP-3,Small businesses (PPP),3,Over 500 kWh,208.63

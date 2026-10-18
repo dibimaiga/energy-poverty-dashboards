@@ -56,41 +56,41 @@ def build_senegal(owid):
         "renewables_share_pct": s.renewables_share_elec.round(1),
         "oil_share_pct": s.oil_share_elec.round(1),
     }).fillna(0)
-    m.to_csv(out / "senegal_electricite_owid.csv", index=False)
+    m.to_csv(out / "senegal_electricity_owid.csv", index=False)
 
     # Access to electricity: national, urban, rural (World Bank)
     def by_year(ind):
         return {y: v for _, y, v in wb_records(f"SEN_{ind}.json")}
     nat, urb, rur = by_year("EG.ELC.ACCS.ZS"), by_year("EG.ELC.ACCS.UR.ZS"), by_year("EG.ELC.ACCS.RU.ZS")
-    write_rows(out / "senegal_acces_electricite_banque_mondiale.csv", [
+    write_rows(out / "senegal_access_world_bank.csv", [
         {"year": y, "access_pct": round(nat[y], 1),
          "urban_pct": round(urb[y], 1) if y in urb else "", "rural_pct": round(rur[y], 1) if y in rur else ""}
         for y in sorted(nat)
     ])
 
     # Electricity generated per person in 2024, comparison (OWID)
-    names = {"Senegal": "Sénégal", "Cote d'Ivoire": "Côte d'Ivoire", "Ghana": "Ghana", "Nigeria": "Nigeria",
-             "Morocco": "Maroc", "Africa": "Afrique", "World": "Monde", "France": "France"}
+    names = {"Senegal": "Senegal", "Cote d'Ivoire": "Côte d'Ivoire", "Ghana": "Ghana", "Nigeria": "Nigeria",
+             "Morocco": "Morocco", "Africa": "Africa", "World": "World", "France": "France"}
     c = owid[(owid.country.isin(names)) & (owid.year == 2024)][["country", "per_capita_electricity"]].copy()
-    c["pays"] = c.country.map(names)
-    c = c[["pays", "per_capita_electricity"]].rename(columns={"per_capita_electricity": "kwh_par_habitant"})
-    c["kwh_par_habitant"] = c.kwh_par_habitant.round(0).astype(int)
-    c.sort_values("kwh_par_habitant").to_csv(out / "comparaison_kwh_hab_2024.csv", index=False)
+    c["country"] = c.country.map(names)
+    c = c.rename(columns={"per_capita_electricity": "kwh_per_person"})
+    c["kwh_per_person"] = c.kwh_per_person.round(0).astype(int)
+    c.sort_values("kwh_per_person").to_csv(out / "per_capita_comparison_2024.csv", index=False)
 
     # Outages and network losses: Senegal and peers (World Bank)
-    peers = {"SEN": "Sénégal", "CIV": "Côte d'Ivoire", "GHA": "Ghana", "NGA": "Nigeria", "MAR": "Maroc",
-             "SSF": "Afrique subsaharienne"}
+    peers = {"SEN": "Senegal", "CIV": "Côte d'Ivoire", "GHA": "Ghana", "NGA": "Nigeria", "MAR": "Morocco",
+             "SSF": "Sub-Saharan Africa"}
     outages = wb_records("SEN-peers_IC.ELC.OUTG.ZS.json")
     latest = {code: max(y for cc, y, _ in outages if cc == code) for code, _, _ in outages}
-    rows = [{"code": c_, "pays": peers[c_], "annee": y, "pct_entreprises": round(v, 1),
-             "derniere": 1 if y == latest[c_] else 0, "libelle": f"{peers[c_]} ({y})"} for c_, y, v in outages]
-    write_rows(out / "coupures_entreprises_banque_mondiale.csv", sorted(rows, key=lambda r: (r["code"], r["annee"])))
-    losses = [{"code": c_, "pays": peers[c_], "year": y, "pertes_pct": round(v, 1)}
+    rows = [{"code": c_, "country": peers[c_], "year": y, "firms_pct": round(v, 1),
+             "latest": 1 if y == latest[c_] else 0, "label": f"{peers[c_]} ({y})"} for c_, y, v in outages]
+    write_rows(out / "firms_outages_world_bank.csv", sorted(rows, key=lambda r: (r["code"], r["year"])))
+    losses = [{"code": c_, "country": peers[c_], "year": y, "losses_pct": round(v, 1)}
               for c_, y, v in wb_records("SEN-peers_EG.ELC.LOSS.ZS.json") if c_ in ("SEN", "SSF")]
-    write_rows(out / "pertes_reseau_banque_mondiale.csv", sorted(losses, key=lambda r: (r["code"], r["year"])))
+    write_rows(out / "network_losses_world_bank.csv", sorted(losses, key=lambda r: (r["code"], r["year"])))
 
     # Hand-entered from documents: tariffs (CRSE), average price (GlobalPetrolPrices), gas milestones (press)
-    for name in ("tarifs_senelec_2026.csv", "prix_menages_globalpetrolprices.csv", "jalons_gaz.csv"):
+    for name in ("senelec_tariffs_2026.csv", "household_price_globalpetrolprices.csv", "gas_milestones.csv"):
         shutil.copyfile(MANUAL / name, out / name)
 
 

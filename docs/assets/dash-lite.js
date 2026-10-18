@@ -165,7 +165,7 @@
   }
   function fmtDate(iso) {
     try {
-      return new Date(iso + 'T12:00:00Z').toLocaleDateString(cfg.lang === 'fr' ? 'fr-FR' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+      return new Date(iso + 'T12:00:00Z').toLocaleDateString(cfg.lang === 'fr' ? 'fr-FR' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' });
     } catch (e) { return iso; }
   }
 
