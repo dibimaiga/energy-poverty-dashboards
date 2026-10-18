@@ -1,0 +1,162 @@
+/* Design tokens shared by every page.
+   Chart colors are the validated reference palette (categorical order matters for
+   colour-blind safety); light and dark values are separate steps, not an inversion. */
+:root {
+  color-scheme: light;
+  --color-bg: #f9f9f7;
+  --color-panel: #fcfcfb;
+  --color-fg: #0b0b0b;
+  --color-fg-muted: #52514e;
+  --color-border-line: #e1e0d9;
+  --color-ok: #006300;
+  --color-warn: #8a5a00;
+  --color-bad: #c13333;
+  --color-link: #1c5cab;
+
+  --cds-chart-categorical-1: #2a78d6;
+  --cds-chart-categorical-2: #eb6834;
+  --cds-chart-categorical-3: #1baf7a;
+  --cds-chart-categorical-4: #eda100;
+  --cds-chart-categorical-5: #e87ba4;
+  --cds-chart-categorical-6: #008300;
+  --cds-chart-categorical-7: #6250d6;
+  --cds-chart-categorical-8: #e34948;
+  --cds-chart-grid: #e1e0d9;
+  --cds-chart-axis: #c3c2b7;
+  --cds-chart-muted: #c3c2b7;
+  --cds-chart-reference: #898781;
+
+  --cds-surface-popover: #ffffff;
+  --cds-border: rgba(11, 11, 11, 0.10);
+  --cds-shadow-popover: 0 6px 20px rgba(11, 11, 11, 0.10);
+  --cds-text-secondary: #52514e;
+  --skeleton: #ecebe6;
+
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --cds-font-size-caption: 0.75rem;
+  --cds-font-size-body: 0.875rem;
+  --cds-font-size-heading: 1rem;
+  --cds-font-size-title: 1.375rem;
+  --cds-font-weight-medium: 500;
+  --cds-gap-xs: 0.25rem;
+  --cds-gap-sm: 0.5rem;
+  --cds-gap-md: 1rem;
+  --cds-gap-lg: 1.5rem;
+  --cds-gap-xl: 2rem;
+  --cds-pad-xs: 0.25rem;
+  --cds-pad-sm: 0.5rem;
+  --cds-pad-md: 0.75rem;
+  --cds-pad-lg: 1rem;
+  --cds-radius: 0.5rem;
+  --cds-dur-slow: 0.45s;
+  --cds-ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+    --color-bg: #0d0d0d;
+    --color-panel: #1a1a19;
+    --color-fg: #f0efec;
+    --color-fg-muted: #c3c2b7;
+    --color-border-line: #2c2c2a;
+    --color-ok: #0ca30c;
+    --color-warn: #fab219;
+    --color-bad: #e66767;
+    --color-link: #86b6ef;
+    --cds-chart-categorical-1: #3987e5;
+    --cds-chart-categorical-2: #d95926;
+    --cds-chart-categorical-3: #199e70;
+    --cds-chart-categorical-4: #c98500;
+    --cds-chart-categorical-5: #d55181;
+    --cds-chart-categorical-6: #008300;
+    --cds-chart-categorical-7: #9085e9;
+    --cds-chart-categorical-8: #e66767;
+    --cds-chart-grid: #2c2c2a;
+    --cds-chart-axis: #383835;
+    --cds-chart-muted: #4f4e49;
+    --cds-chart-reference: #898781;
+    --cds-surface-popover: #262624;
+    --cds-border: rgba(255, 255, 255, 0.10);
+    --cds-shadow-popover: 0 6px 20px rgba(0, 0, 0, 0.45);
+    --cds-text-secondary: #c3c2b7;
+    --skeleton: #262624;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-bg: #0d0d0d;
+  --color-panel: #1a1a19;
+  --color-fg: #f0efec;
+  --color-fg-muted: #c3c2b7;
+  --color-border-line: #2c2c2a;
+  --color-ok: #0ca30c;
+  --color-warn: #fab219;
+  --color-bad: #e66767;
+  --color-link: #86b6ef;
+  --cds-chart-categorical-1: #3987e5;
+  --cds-chart-categorical-2: #d95926;
+  --cds-chart-categorical-3: #199e70;
+  --cds-chart-categorical-4: #c98500;
+  --cds-chart-categorical-5: #d55181;
+  --cds-chart-categorical-6: #008300;
+  --cds-chart-categorical-7: #9085e9;
+  --cds-chart-categorical-8: #e66767;
+  --cds-chart-grid: #2c2c2a;
+  --cds-chart-axis: #383835;
+  --cds-chart-muted: #4f4e49;
+  --cds-chart-reference: #898781;
+  --cds-surface-popover: #262624;
+  --cds-border: rgba(255, 255, 255, 0.10);
+  --cds-shadow-popover: 0 6px 20px rgba(0, 0, 0, 0.45);
+  --cds-text-secondary: #c3c2b7;
+  --skeleton: #262624;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  font-size: var(--cds-font-size-body);
+  line-height: 1.5;
+}
+a { color: var(--color-link); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 2px; }
+
+#dash-root { padding: 0 clamp(16px, 4vw, 40px) clamp(24px, 4vw, 48px); }
+
+/* Top bar */
+.ds-nav {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--cds-gap-sm);
+  max-width: 76rem; margin: 0 auto; padding: 14px 0 18px;
+  font-size: var(--cds-font-size-caption); color: var(--color-fg-muted);
+}
+.ds-nav a { color: var(--color-fg-muted); text-decoration: none; }
+.ds-nav a:hover { color: var(--color-fg); text-decoration: underline; }
+
+/* Loading placeholders */
+.dash-skeleton { color: transparent !important; background: var(--skeleton); border-radius: 4px; }
+.dash-skeleton * { visibility: hidden; }
+@media (prefers-reduced-motion: no-preference) {
+  .dash-skeleton { animation: ds-pulse 1.4s ease-in-out infinite; }
+  @keyframes ds-pulse { 50% { opacity: 0.55; } }
+}
+
+/* Data & sources section rendered by dash-lite.js */
+.ds-sources {
+  background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius);
+  padding: var(--cds-pad-lg); margin-top: var(--cds-gap-md);
+  font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.55;
+}
+.ds-sources h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); color: var(--color-fg); margin: 0 0 var(--cds-gap-sm); }
+.ds-sources h3 { font-size: var(--cds-font-size-caption); font-weight: 600; color: var(--color-fg); margin: var(--cds-gap-md) 0 var(--cds-gap-xs); }
+.ds-sources ul { list-style: none; padding: 0; margin: 0; }
+.ds-sources li { padding: var(--cds-gap-sm) 0; border-bottom: 1px solid var(--color-border-line); }
+.ds-sources li:last-child { border-bottom: none; }
+.ds-sources b { color: var(--color-fg); font-weight: 600; }
+.ds-sources .ds-links { display: block; margin-top: 2px; }
+.ds-sources .ds-foot { margin: var(--cds-gap-md) 0 0; padding-top: var(--cds-gap-sm); border-top: 1px solid var(--color-border-line); }

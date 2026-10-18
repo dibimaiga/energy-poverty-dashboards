@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sénégal : énergie en chiffres</title>
+<meta name="description" content="Accès à l'électricité, production, prix et coupures au Sénégal, et le passage au gaz domestique, à partir de données publiques.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sénégal : énergie en chiffres">
+<meta property="og:description" content="Accès à l'électricité, production, prix et coupures au Sénégal, et le passage au gaz domestique, à partir de données publiques.">
+<link rel="stylesheet" href="../assets/theme.css">
+<style>
+.sn { font-family: var(--font-sans); color: var(--color-fg); max-width: 72rem; margin-inline: auto; }
+.sn-head h1 { font-family: var(--font-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0 0 var(--cds-gap-xs); }
+.sn-take { font-size: var(--cds-font-size-body); color: var(--color-fg-muted); margin: 0 0 var(--cds-gap-lg); max-width: 48rem; line-height: 1.5; }
+.sn-take b, .sn-kpi b { font-weight: 600; color: var(--color-fg); }
+.sn-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: var(--cds-gap-md); margin-bottom: var(--cds-gap-lg); }
+.sn-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); position: relative; min-width: 0; }
+.sn-kpi .lbl { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.sn-kpi .val { font-family: var(--font-serif); font-weight: 400; font-size: var(--cds-font-size-title); font-variant-numeric: tabular-nums; margin: var(--cds-gap-xs) 0; min-height: 1.3em; }
+.sn-kpi .sub { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+.sn-up { color: var(--color-ok); }
+.sn-bad { color: var(--color-bad); }
+.sn-section { font-family: var(--font-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: var(--cds-gap-xl) 0 var(--cds-gap-md); }
+.sn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: var(--cds-gap-md); margin-bottom: var(--cds-gap-md); }
+.sn-card h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0 0 var(--cds-gap-xs); }
+.sn-note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0 0 var(--cds-gap-md); line-height: 1.45; }
+.sn-chart { position: relative; min-height: 260px; }
+.sn-chart.tall { min-height: 300px; }
+.sn-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs) var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin-top: var(--cds-gap-sm); }
+.sn-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sn-legend i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.sn-tip { position: absolute; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); pointer-events: none; white-space: nowrap; display: none; z-index: 2; font-variant-numeric: tabular-nums; }
+.sn-tip .t { color: var(--cds-text-secondary); margin-bottom: 2px; }
+.sn-tip .r { display: flex; align-items: center; gap: 6px; }
+.sn-tip i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+.sn-table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-body); }
+.sn-table th { text-align: left; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-weight: var(--cds-font-weight-medium); padding: var(--cds-pad-xs) var(--cds-pad-sm) var(--cds-pad-xs) 0; border-bottom: 1px solid var(--color-border-line); }
+.sn-table td { padding: var(--cds-pad-sm) var(--cds-pad-sm) var(--cds-pad-sm) 0; border-bottom: 1px solid var(--color-border-line); vertical-align: top; line-height: 1.4; }
+.sn-table td:first-child { white-space: nowrap; font-variant-numeric: tabular-nums; color: var(--color-fg-muted); }
+.sn-table td:last-child { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+@media (max-width: 34rem) { .sn-table th:last-child, .sn-table td:last-child { display: none; } }
+.sn-method { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.55; }
+.sn-method p { margin: 0 0 var(--cds-gap-xs); }
+.sn-method h2 { color: var(--color-fg); }
+.sn-fail { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: inherit; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.sn-fail::before { content: ""; width: .375rem; height: .375rem; border-radius: 50%; background: var(--color-bad); }
+.sn [data-dash-source-state=empty] { color: transparent; }
+.sn [data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+.sn svg text { font-family: var(--font-sans); }
+@media (prefers-reduced-motion: no-preference) {
+  .sn-anim { animation: sn-fade var(--cds-dur-slow) var(--cds-ease-out) both; }
+  @keyframes sn-fade { from { opacity: 0; } to { opacity: 1; } }
+}
+</style>
+<script src="../assets/vendor/d3.v7.9.0.min.js"></script>
+<script>
+window.DASH_CONFIG = {
+  "lang": "fr",
+  "repo": "https://github.com/dibimaiga/energy-poverty-dashboards",
+  "params": {},
+  "datasets": {
+    "access": {
+      "url": "../data/senegal/senegal_acces_electricite_banque_mondiale.csv",
+      "title": "Accès à l'électricité",
+      "description": "Part de la population ayant accès à l'électricité au Sénégal, nationale, urbaine et rurale, 2000-2024 (mise à jour Banque mondiale du 8 octobre 2026).",
+      "sources": [
+        {
+          "label": "Banque mondiale, EG.ELC.ACCS.ZS",
+          "url": "https://data.worldbank.org/indicator/EG.ELC.ACCS.ZS?locations=SN"
+        },
+        {
+          "label": "urbain",
+          "url": "https://data.worldbank.org/indicator/EG.ELC.ACCS.UR.ZS?locations=SN"
+        },
+        {
+          "label": "rural",
+          "url": "https://data.worldbank.org/indicator/EG.ELC.ACCS.RU.ZS?locations=SN"
+        }
+      ],
+      "extracted": "2026-10-17"
+    },
+    "elec": {
+      "url": "../data/senegal/senegal_electricite_owid.csv",
+      "title": "Production électrique",
+      "description": "Production, consommation, électricité produite par habitant et mix par source au Sénégal, 2000-2024.",
+      "sources": [
+        {
+          "label": "Our World in Data, energy-data (Energy Institute, Ember)",
+          "url": "https://github.com/owid/energy-data"
+        }
+      ],
+      "extracted": "2026-10-17"
+    },
+    "compare": {
+      "url": "../data/senegal/comparaison_kwh_hab_2024.csv",
+      "title": "Comparaison de l'électricité par habitant",
+      "description": "Électricité produite par habitant en 2024 pour le Sénégal, cinq pays ou régions de référence et la France.",
+      "sources": [
+        {
+          "label": "Our World in Data, energy-data (Energy Institute, Ember)",
+          "url": "https://github.com/owid/energy-data"
+        }
+      ],
+      "extracted": "2026-10-17"
+    },
+    "jalons": {
+      "url": "../data/senegal/jalons_gaz.csv",
+      "title": "Jalons du gaz domestique",
+      "description": "Étapes publiques du passage au gaz sénégalais pour produire l'électricité, relevées dans les sources indiquées ici.",
+      "sources": [
+        {
+          "label": "Woodside (communiqué, juin 2024)",
+          "url": "https://www.businesswire.com/news/home/20240610557422/en/Woodside-Achieves-First-Oil-at-Sangomar-in-Senegal"
+        },
+        {
+          "label": "Ecofin Agency (29 août 2025)",
+          "url": "https://www.ecofinagency.com/news-industry/2908-48257-senegal-to-end-gas-imports-in-2026-raising-questions-over-power-tariffs"
+        },
+        {
+          "label": "MSGBC Oil, Gas & Power (5 juin 2026)",
+          "url": "https://msgbcoilgasandpower.com/news/senegal-greenlights-gta-gandon-pipeline-domestic-gas-power-drive-accelerates"
+        }
+      ],
+      "extracted": "2026-10-18"
+    },
+    "prix": {
+      "url": "../data/senegal/prix_menages_globalpetrolprices.csv",
+      "title": "Prix moyen pour les ménages",
+      "description": "Prix moyen de l'électricité pour les ménages, toutes taxes comprises, et rapport aux moyennes mondiale et africaine (juin 2025).",
+      "sources": [
+        {
+          "label": "GlobalPetrolPrices",
+          "url": "https://www.globalpetrolprices.com/Senegal/electricity_prices/"
+        }
+      ],
+      "extracted": "2026-10-17"
+    },
+    "tarifs": {
+      "url": "../data/senegal/tarifs_senelec_2026.csv",
+      "title": "Tarifs Senelec 2026",
+      "description": "Grille tarifaire basse tension applicable au 1er janvier 2026 (ménages DPP et professionnels PPP), décision CRSE n°2025-140.",
+      "sources": [
+        {
+          "label": "CRSE, grilles tarifaires (PDF)",
+          "url": "https://www.crse.sn/wp-content/uploads/2025/12/Grilles-tarifaires-Senelec-et-CER-applicables-a-compter-du-1er-janvier-2026.pdf"
+        }
+      ],
+      "extracted": "2026-10-17"
+    },
+    "coupures": {
+      "url": "../data/senegal/coupures_entreprises_banque_mondiale.csv",
+      "title": "Coupures subies par les entreprises",
+      "description": "Part des entreprises ayant subi des coupures de courant, enquêtes Entreprises de la Banque mondiale, Sénégal et pays de comparaison.",
+      "sources": [
+        {
+          "label": "Banque mondiale, IC.ELC.OUTG.ZS",
+          "url": "https://data.worldbank.org/indicator/IC.ELC.OUTG.ZS"
+        }
+      ],
+      "extracted": "2026-10-17"
+    },
+    "pertes": {
+      "url": "../data/senegal/pertes_reseau_banque_mondiale.csv",
+      "title": "Pertes du réseau",
+      "description": "Pertes de transport et de distribution en % de la production, Sénégal et Afrique subsaharienne.",
+      "sources": [
+        {
+          "label": "Banque mondiale, EG.ELC.LOSS.ZS",
+          "url": "https://data.worldbank.org/indicator/EG.ELC.LOSS.ZS"
+        }
+      ],
+      "extracted": "2026-10-17"
+    }
+  }
+};
+</script>
+<script src="../assets/dash-lite.js"></script>
+</head>
+<body>
+<main id="dash-root">
+<nav class="ds-nav" style="max-width: 72rem"><a href="../">← Tous les tableaux de bord</a><a href="https://github.com/dibimaiga/energy-poverty-dashboards">Code et données sur GitHub</a></nav>
+<div class="sn">
+  <header class="sn-head" id="haut">
+    <h1>Sénégal : énergie en chiffres</h1>
+    <p class="sn-take" id="takeaway">
+      En 2024, <b data-source="access" data-field="access_pct" data-where="year=2024" class="dash-skeleton">—</b>&nbsp;% des Sénégalais ont accès à l'électricité, contre
+      <b data-source="access" data-field="access_pct" data-where="year=2000" class="dash-skeleton">—</b>&nbsp;% en 2000. Mais le pays ne produit que
+      <b data-source="elec" data-field="per_capita_kwh" data-where="year=2024" class="dash-skeleton">—</b>&nbsp;kWh par habitant et par an,
+      <b data-source="ratios" data-field="world_over_sn" class="dash-skeleton">—</b> fois moins que la moyenne mondiale, et le pétrole fournit encore
+      <b data-source="elec" data-field="oil_share_pct" data-where="year=2024" class="dash-skeleton">—</b>&nbsp;% de la production.
+    </p>
+  </header>
+
+  <section class="sn-kpis" id="indicateurs">
+    <div class="sn-card sn-kpi">
+      <div class="lbl">Accès à l'électricité · 2024</div>
+      <div class="val"><span data-source="access" data-field="access_pct" data-where="year=2024" class="dash-skeleton">—</span>&nbsp;%</div>
+      <div class="sub"><span class="sn-up" data-source="ratios" data-field="access_delta_pts">—</span> pts depuis 2000 · Rural&nbsp;: <span data-source="access" data-field="rural_pct" data-where="year=2024">—</span>&nbsp;%</div>
+    </div>
+    <div class="sn-card sn-kpi">
+      <div class="lbl">Électricité produite par habitant · 2024</div>
+      <div class="val"><span data-source="elec" data-field="per_capita_kwh" data-where="year=2024" class="dash-skeleton">—</span>&nbsp;kWh</div>
+      <div class="sub">×&nbsp;<span data-source="ratios" data-field="percap_growth">—</span> depuis 2000 · Monde&nbsp;: <span data-source="compare" data-field="kwh_par_habitant" data-where="pays=Monde">—</span>&nbsp;kWh</div>
+    </div>
+    <div class="sn-card sn-kpi">
+      <div class="lbl">Part du pétrole dans la production · 2024</div>
+      <div class="val"><span data-source="elec" data-field="oil_share_pct" data-where="year=2024" class="dash-skeleton">—</span>&nbsp;%</div>
+      <div class="sub">Fioul lourd et diesel</div>
+    </div>
+    <div class="sn-card sn-kpi">
+      <div class="lbl">Part des renouvelables · 2024</div>
+      <div class="val"><span data-source="elec" data-field="renewables_share_pct" data-where="year=2024" class="dash-skeleton">—</span>&nbsp;%</div>
+      <div class="sub">Solaire, éolien, hydraulique, biomasse</div>
+    </div>
+  </section>
+
+  <section class="sn-grid">
+    <div class="sn-card" id="acces">
+      <h2>L'accès a plus que doublé, mais les campagnes restent en retard</h2>
+      <p class="sn-note">Part de la population ayant accès à l'électricité, en %. Les creux ponctuels (2004, 2020) tiennent probablement à des changements d'enquête plutôt qu'à des pertes réelles.</p>
+      <div class="sn-chart" id="ch-access" data-source="access"></div>
+      <div class="sn-legend" id="lg-access" data-source="access"></div>
+    </div>
+    <div class="sn-card" id="mix">
+      <h2>Une production qui a quintuplé, toujours dominée par le pétrole</h2>
+      <p class="sn-note">Production d'électricité par source, en TWh par an.</p>
+      <div class="sn-chart tall" id="ch-mix" data-source="elec"></div>
+      <div class="sn-legend" id="lg-mix" data-source="elec"></div>
+    </div>
+  </section>
+
+  <section class="sn-grid">
+    <div class="sn-card" id="comparaison">
+      <h2>Loin derrière le Maroc, et à des années-lumière de la France</h2>
+      <p class="sn-note">Électricité produite par habitant en 2024, en kWh (échelle logarithmique).</p>
+      <div class="sn-chart" id="ch-compare" data-source="compare"></div>
+    </div>
+    <div class="sn-card" id="gaz">
+      <h2>Ce qui va changer : le gaz domestique</h2>
+      <p class="sn-note">Jalons publics du passage au gaz sénégalais pour produire l'électricité.</p>
+      <table class="sn-table" data-source="jalons" data-row-key="date">
+        <thead><tr><th data-field="date">Date</th><th data-field="jalon">Jalon</th><th data-field="source">Source</th></tr></thead>
+        <tbody id="tb-jalons"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <h2 class="sn-section" id="prix-fiabilite">Prix et fiabilité</h2>
+  <section class="sn-kpis">
+    <div class="sn-card sn-kpi">
+      <div class="lbl">Prix moyen pour les ménages · juin 2025</div>
+      <div class="val"><span data-source="prix" data-field="prix_fcfa_kwh" data-row="0" class="dash-skeleton">—</span>&nbsp;FCFA/kWh</div>
+      <div class="sub">Soit <span data-source="prix" data-field="prix_usd_kwh" data-row="0">—</span>&nbsp;$ · <span class="sn-bad" data-source="prix_ecarts" data-field="vs_monde">—</span> vs monde · <span class="sn-bad" data-source="prix_ecarts" data-field="vs_afrique">—</span> vs Afrique</div>
+    </div>
+    <div class="sn-card sn-kpi">
+      <div class="lbl">Entreprises subissant des coupures · 2024</div>
+      <div class="val"><span data-source="coupures" data-field="pct_entreprises" data-where="code=SEN&amp;annee=2024" class="dash-skeleton">—</span>&nbsp;%</div>
+      <div class="sub">Contre <span data-source="coupures" data-field="pct_entreprises" data-where="code=SEN&amp;annee=2014">—</span>&nbsp;% en 2014 et <span data-source="coupures" data-field="pct_entreprises" data-where="code=SEN&amp;annee=2007">—</span>&nbsp;% en 2007</div>
+    </div>
+    <div class="sn-card sn-kpi">
+      <div class="lbl">Pertes sur le réseau · 2024</div>
+      <div class="val"><span data-source="pertes" data-field="pertes_pct" data-where="code=SEN&amp;year=2024" class="dash-skeleton">—</span>&nbsp;%</div>
+      <div class="sub">De l'électricité produite, perdue en transport et distribution · Afrique subsaharienne&nbsp;: <span data-source="pertes" data-field="pertes_pct" data-where="code=SSF&amp;year=2023">—</span>&nbsp;% (2023)</div>
+    </div>
+  </section>
+
+  <section class="sn-grid">
+    <div class="sn-card" id="tarifs">
+      <h2>Plus on consomme, plus le kWh coûte cher</h2>
+      <p class="sn-note">Tarifs Senelec en basse tension depuis le 1<sup>er</sup> janvier 2026, en FCFA par kWh, par tranche de consommation. La première tranche a baissé de 10&nbsp;% à cette date.</p>
+      <div class="sn-chart" id="ch-tarifs" data-source="tarifs"></div>
+    </div>
+    <div class="sn-card" id="coupures">
+      <h2>Les coupures reculent : le Sénégal fait mieux que d'autres pays de la région, pas encore que le Maroc</h2>
+      <p class="sn-note">Part des entreprises ayant subi au moins une coupure de courant, dernière enquête disponible, en %.</p>
+      <div class="sn-chart" id="ch-coupures" data-source="coupures"></div>
+    </div>
+  </section>
+
+  <section class="sn-card sn-method" id="methode">
+    <h2>Méthode et limites</h2>
+    <p><b>Production et mix</b> : Our World in Data (Energy Institute, Ember), données 2000-2024. La consommation dépasse légèrement la production locale ; l'écart correspond aux importations nettes d'électricité.</p>
+    <p><b>Accès</b> : Banque mondiale, indicateurs EG.ELC.ACCS.ZS (national), EG.ELC.ACCS.UR.ZS (urbain) et EG.ELC.ACCS.RU.ZS (rural), issus du jeu de données SDG 7.1.1, mis à jour le 8 octobre 2026. Le gouvernement annonce un taux national de 84&nbsp;%.</p>
+    <p><b>Prix</b> : grille officielle Senelec approuvée par la CRSE (décision n°2025-140), applicable au 1<sup>er</sup> janvier 2026. Le prix moyen des ménages vient de GlobalPetrolPrices (juin 2025, toutes taxes comprises) : il est antérieur à la baisse de 2026.</p>
+    <p><b>Fiabilité</b> : enquêtes Entreprises de la Banque mondiale (IC.ELC.OUTG.ZS), menées tous les 5 à 10 ans et à des dates différentes selon les pays. Pertes : indicateur EG.ELC.LOSS.ZS. Le nombre de coupures par mois ne figure plus dans les indicateurs WDI de la Banque mondiale.</p>
+  </section>
+  <div id="dash-sources"></div>
+</div>
+
+<script>
+window.SN = (function () {
+  const nf1 = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 1, minimumFractionDigits: 1 });
+  const nf0 = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 });
+  const nf2 = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 2 });
+  const nf2f = new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  function tip(box) {
+    let t = box.querySelector('.sn-tip');
+    if (!t) { t = document.createElement('div'); t.className = 'sn-tip'; box.appendChild(t); }
+    return {
+      show(x, y, title, rows) {
+        t.replaceChildren();
+        const h = document.createElement('div'); h.className = 't'; h.textContent = title; t.appendChild(h);
+        rows.forEach(r => {
+          const d = document.createElement('div'); d.className = 'r';
+          if (r.color) { const i = document.createElement('i'); i.style.background = r.color; d.appendChild(i); }
+          const s = document.createElement('span'); s.textContent = r.text; d.appendChild(s); t.appendChild(d);
+        });
+        t.style.display = 'block';
+        const bw = box.clientWidth, tw = t.offsetWidth, th = t.offsetHeight;
+        let left = x + 12; if (left + tw > bw) left = Math.max(0, x - tw - 12);
+        let top = y - th - 8; if (top < 0) top = y + 12;
+        t.style.left = left + 'px'; t.style.top = top + 'px';
+      },
+      hide() { t.style.display = 'none'; }
+    };
+  }
+  function fail(box) {
+    box.replaceChildren(); const d = document.createElement('div'); d.className = 'sn-fail'; d.textContent = 'Failed to load'; box.appendChild(d);
+  }
+  function styleAxis(g) {
+    g.attr('font-size', null).attr('font-family', null);
+    g.selectAll('text').attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)');
+    g.selectAll('.domain').attr('stroke', 'var(--cds-chart-axis)');
+    g.selectAll('.tick line').attr('stroke', 'var(--cds-chart-grid)');
+  }
+  return { nf1, nf0, nf2, nf2f, tip, fail, styleAxis, animated: {} };
+})();
+</script>
+
+<script>
+dash.calc('ratios', {
+  title: 'Évolutions clés',
+  description: "Hausse de l'accès (points) et de l'électricité par habitant depuis 2000, et écart avec la moyenne mondiale.",
+  inputs: ['access', 'elec', 'compare'],
+  fn: (access, elec, compare) => {
+    const a = y => Number(access.find(r => Number(r.year) === y)?.access_pct);
+    const e = y => Number(elec.find(r => Number(r.year) === y)?.per_capita_kwh);
+    const c = p => Number(compare.find(r => r.pays === p)?.kwh_par_habitant);
+    return [{
+      access_delta_pts: Math.round((a(2024) - a(2000)) * 10) / 10,
+      percap_growth: Math.round(e(2024) / e(2000) * 10) / 10,
+      world_over_sn: Math.round(c('Monde') / c('Sénégal'))
+    }];
+  }
+});
+
+dash.onData(() => {
+  const SN = window.SN;
+  const root = document.getElementById('dash-root') || document;
+  const A = dash.data('access'), E = dash.data('elec'), C = dash.data('compare'), J = dash.data('jalons'), R = dash.data('ratios');
+
+  // Marked text values
+  const fill = (sel, st, getter) => {
+    root.querySelectorAll(sel).forEach(el => {
+      if (st.status !== 'ok') { if (st.status === 'error') el.classList.remove('dash-skeleton'); return; }
+      el.classList.remove('dash-skeleton');
+      const v = getter(el); el.textContent = v == null || Number.isNaN(v) ? '—' : v;
+    });
+  };
+  const rowWhere = (rows, el) => {
+    const [k, v] = (el.dataset.where || '').split('=');
+    return rows.find(r => String(r[k]) === decodeURIComponent(v || ''));
+  };
+  fill('[data-source="access"][data-field]', A, el => { const r = rowWhere(A.data, el); return r && r[el.dataset.field] !== '' ? SN.nf1.format(Number(r[el.dataset.field])) : null; });
+  fill('[data-source="elec"][data-field]', E, el => {
+    const r = rowWhere(E.data, el); if (!r) return null; const v = Number(r[el.dataset.field]);
+    return el.dataset.field === 'per_capita_kwh' ? SN.nf0.format(v) : SN.nf1.format(v);
+  });
+  fill('[data-source="compare"][data-field]', C, el => { const r = rowWhere(C.data, el); return r ? SN.nf0.format(Number(r.kwh_par_habitant)) : null; });
+  fill('[data-source="ratios"][data-field]', R, el => {
+    const r = R.data[0]; if (!r) return null; const f = el.dataset.field, v = Number(r[f]);
+    if (f === 'access_delta_pts') return '+' + SN.nf1.format(v);
+    if (f === 'percap_growth') return SN.nf1.format(v);
+    return SN.nf0.format(v);
+  });
+
+  drawAccess(A); drawMix(E); drawCompare(C); drawJalons(J);
+
+  function drawAccess(st) {
+    const box = document.getElementById('ch-access'), lg = document.getElementById('lg-access');
+    if (st.status === 'error') { lg.replaceChildren(); return SN.fail(box); }
+    if (st.status !== 'ok') { box.classList.add('dash-skeleton'); return; }
+    box.classList.remove('dash-skeleton'); box.replaceChildren(); lg.replaceChildren();
+    const num = v => (v === '' || v == null) ? NaN : Number(v);
+    const rows = st.data.map(r => ({ year: Number(r.year), access_pct: num(r.access_pct), urban_pct: num(r.urban_pct), rural_pct: num(r.rural_pct) })).sort((a, b) => a.year - b.year);
+    const series = [
+      { k: 'urban_pct', n: 'Villes', c: 'var(--cds-chart-muted)', w: 1.5 },
+      { k: 'rural_pct', n: 'Campagnes', c: dash.colors[1], w: 2 },
+      { k: 'access_pct', n: 'National', c: dash.colors[0], w: 2.5 }
+    ];
+    const W = box.clientWidth || 400, H = 260, m = { t: 12, r: 8, b: 26, l: 8 };
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', "Accès à l'électricité au Sénégal, national, villes et campagnes, 2000-2024");
+    const meas = svg.append('text').style('font-size', 'var(--cds-font-size-caption)').text('100,0 %');
+    m.r = Math.ceil(meas.node().getComputedTextLength()) + 10; meas.remove();
+    const y = d3.scaleLinear([0, 100], [H - m.b, m.t]);
+    const gy = svg.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d => d + ' %').tickSize(0));
+    SN.styleAxis(gy); m.l = Math.ceil(gy.node().getBBox().width) + 8; gy.attr('transform', `translate(${m.l - 4},0)`); gy.select('.domain').remove();
+    const x = d3.scaleLinear(d3.extent(rows, d => d.year), [m.l, W - m.r]);
+    svg.insert('g', ':first-child').selectAll('line').data(y.ticks(5)).join('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', d => y(d)).attr('y2', d => y(d)).attr('stroke', 'var(--cds-chart-grid)');
+    const gx = svg.append('g').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(Math.min(6, Math.floor(W / 70))).tickFormat(d3.format('d')).tickSizeOuter(0));
+    SN.styleAxis(gx);
+    const id = 'sn-grad-acc';
+    const grad = svg.append('defs').append('linearGradient').attr('id', id).attr('x1', 0).attr('x2', 0).attr('y1', 0).attr('y2', 1);
+    [[0, .26], [.25, .16], [.5, .08], [.75, .03], [1, 0]].forEach(([o, op]) => grad.append('stop').attr('offset', o).attr('style', `stop-color:${dash.colors[0]};stop-opacity:${op}`));
+    const nat = rows.filter(d => !isNaN(d.access_pct));
+    svg.append('path').datum(nat).attr('fill', `url(#${id})`).attr('d', d3.area().x(d => x(d.year)).y0(y(0)).y1(d => y(d.access_pct)));
+    const g = svg.append('g').attr('class', SN.animated.acc ? '' : 'sn-anim');
+    const labels = [];
+    series.forEach(s => {
+      const pts = rows.filter(d => !isNaN(d[s.k]));
+      if (!pts.length) return;
+      g.append('path').datum(pts).attr('fill', 'none').attr('stroke', s.c).attr('stroke-width', s.w).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round').attr('d', d3.line().x(d => x(d.year)).y(d => y(d[s.k])));
+      const last = pts[pts.length - 1];
+      g.append('circle').attr('cx', x(last.year)).attr('cy', y(last[s.k])).attr('r', 3).attr('fill', s.c);
+      labels.push({ y: y(last[s.k]), x: x(last.year), t: SN.nf1.format(last[s.k]) + ' %', bold: s.k === 'access_pct' });
+    });
+    labels.sort((a, b) => a.y - b.y);
+    for (let i = 1; i < labels.length; i++) if (labels[i].y - labels[i - 1].y < 13) labels[i].y = labels[i - 1].y + 13;
+    labels.forEach(l => g.append('text').attr('x', l.x + 6).attr('y', l.y + 4).attr('fill', 'var(--color-fg)').style('font-size', 'var(--cds-font-size-caption)').style('font-weight', l.bold ? 600 : 400).style('font-variant-numeric', 'tabular-nums').text(l.t));
+    SN.animated.acc = true;
+    series.slice().reverse().forEach(s => {
+      const sp = document.createElement('span'); const sw = document.createElement('i'); sw.style.background = s.c;
+      sp.appendChild(sw); sp.appendChild(document.createTextNode(s.n)); lg.appendChild(sp);
+    });
+    const tp = SN.tip(box);
+    const rule = svg.append('line').attr('y1', m.t).attr('y2', H - m.b).attr('stroke', 'var(--cds-chart-reference)').style('display', 'none');
+    const dots = series.map(s => svg.append('circle').attr('r', 4).attr('fill', s.c).style('display', 'none'));
+    svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+      .on('pointermove', ev => {
+        const [px] = d3.pointer(ev); const yr = Math.round(x.invert(px)); const d = rows.find(r => r.year === yr); if (!d) return;
+        rule.style('display', null).attr('x1', x(d.year)).attr('x2', x(d.year));
+        series.forEach((s, i) => { if (isNaN(d[s.k])) dots[i].style('display', 'none'); else dots[i].style('display', null).attr('cx', x(d.year)).attr('cy', y(d[s.k])); });
+        const lines = series.slice().reverse().filter(s => !isNaN(d[s.k])).map(s => ({ color: s.c, text: `${s.n} : ${SN.nf1.format(d[s.k])} %` }));
+        const k = box.clientWidth / W; tp.show(x(d.year) * k, y(d.access_pct) * k, String(d.year), lines);
+      })
+      .on('pointerleave', () => { rule.style('display', 'none'); dots.forEach(c => c.style('display', 'none')); tp.hide(); });
+  }
+
+  function drawMix(st) {
+    const box = document.getElementById('ch-mix'), lg = document.getElementById('lg-mix');
+    if (st.status === 'error') { lg.replaceChildren(); return SN.fail(box); }
+    if (st.status !== 'ok') { box.classList.add('dash-skeleton'); return; }
+    box.classList.remove('dash-skeleton'); box.replaceChildren(); lg.replaceChildren();
+    const keys = [
+      ['oil_twh', 'Pétrole'], ['coal_twh', 'Charbon'], ['gas_twh', 'Gaz'],
+      ['hydro_twh', 'Hydraulique'], ['solar_twh', 'Solaire'], ['wind_twh', 'Éolien'], ['bio_other_twh', 'Biomasse et autres']
+    ];
+    const col = i => dash.colors[i % dash.colors.length];
+    const rows = st.data.map(r => { const o = { year: Number(r.year) }; keys.forEach(([k]) => o[k] = Number(r[k]) || 0); o.total = Number(r.generation_twh); return o; }).sort((a, b) => a.year - b.year);
+    const W = box.clientWidth || 400, H = 300, m = { t: 12, r: 8, b: 26, l: 8 };
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'Production électrique du Sénégal par source');
+    const stack = d3.stack().keys(keys.map(k => k[0]))(rows);
+    const ymax = d3.max(rows, d => keys.reduce((s, [k]) => s + d[k], 0));
+    const y = d3.scaleLinear([0, ymax], [H - m.b, m.t]).nice();
+    const gy = svg.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d => SN.nf0.format(d)).tickSize(0));
+    SN.styleAxis(gy); m.l = Math.ceil(gy.node().getBBox().width) + 8; gy.attr('transform', `translate(${m.l - 4},0)`); gy.select('.domain').remove();
+    const x = d3.scaleBand(rows.map(d => d.year), [m.l, W - m.r]).padding(0.2);
+    svg.insert('g', ':first-child').selectAll('line').data(y.ticks(5)).join('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', d => y(d)).attr('y2', d => y(d)).attr('stroke', 'var(--cds-chart-grid)');
+    const step = W < 420 ? 8 : 4;
+    const gx = svg.append('g').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).tickValues(rows.map(d => d.year).filter(yr => (yr - 2000) % step === 0)).tickSizeOuter(0).tickSize(0).tickPadding(6));
+    SN.styleAxis(gx);
+    const g = svg.append('g').attr('class', SN.animated.mix ? '' : 'sn-anim');
+    stack.forEach((s, i) => {
+      g.append('g').attr('fill', col(i)).selectAll('rect').data(s).join('rect')
+        .attr('x', d => x(d.data.year)).attr('width', x.bandwidth())
+        .attr('y', d => y(d[1])).attr('height', d => Math.max(0, y(d[0]) - y(d[1])));
+    });
+    SN.animated.mix = true;
+    keys.forEach(([, name], i) => {
+      const s = document.createElement('span'); const sw = document.createElement('i'); sw.style.background = col(i);
+      s.appendChild(sw); s.appendChild(document.createTextNode(name)); lg.appendChild(s);
+    });
+    const tp = SN.tip(box);
+    const hl = svg.append('rect').attr('fill', 'none').attr('stroke', 'var(--color-fg)').attr('stroke-width', 1).attr('rx', 2).style('display', 'none');
+    svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+      .on('pointermove', ev => {
+        const [px] = d3.pointer(ev); const i = Math.floor((px - m.l) / x.step()); const d = rows[Math.max(0, Math.min(rows.length - 1, i))];
+        const top = keys.reduce((s, [k]) => s + d[k], 0);
+        hl.style('display', null).attr('x', x(d.year) - 1).attr('width', x.bandwidth() + 2).attr('y', y(top) - 1).attr('height', y(0) - y(top) + 1);
+        const lines = keys.map(([k, n], j) => ({ k, n, j })).filter(o => d[o.k] > 0).reverse()
+          .map(o => ({ color: col(o.j), text: `${o.n} : ${SN.nf2.format(d[o.k])} TWh` }));
+        lines.push({ text: `Total : ${SN.nf2.format(d.total)} TWh` });
+        const k = box.clientWidth / W; tp.show((x(d.year) + x.bandwidth() / 2) * k, y(top) * k, String(d.year), lines);
+      })
+      .on('pointerleave', () => { hl.style('display', 'none'); tp.hide(); });
+  }
+
+  function drawCompare(st) {
+    const box = document.getElementById('ch-compare');
+    if (st.status === 'error') return SN.fail(box);
+    if (st.status !== 'ok') { box.classList.add('dash-skeleton'); return; }
+    box.classList.remove('dash-skeleton'); box.replaceChildren();
+    const rows = st.data.map(r => ({ p: r.pays, v: Number(r.kwh_par_habitant) })).sort((a, b) => b.v - a.v);
+    const W = box.clientWidth || 400, bh = 22, gap = 10, m = { t: 4, r: 8, b: 4, l: 8 };
+    const H = m.t + m.b + rows.length * (bh + gap);
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'Électricité par habitant, comparaison 2024');
+    const meas = svg.append('g');
+    const lw = d3.max(rows, d => { const t = meas.append('text').style('font-size', 'var(--cds-font-size-caption)').text(d.p); const w = t.node().getComputedTextLength(); t.remove(); return w; });
+    const vw = d3.max(rows, d => { const t = meas.append('text').style('font-size', 'var(--cds-font-size-caption)').text(SN.nf0.format(d.v)); const w = t.node().getComputedTextLength(); t.remove(); return w; });
+    meas.remove();
+    m.l = Math.ceil(lw) + 12; m.r = Math.ceil(vw) + 10;
+    const x = d3.scaleLog([100, d3.max(rows, d => d.v)], [m.l, W - m.r]);
+    const yb = d3.scaleBand(rows.map(d => d.p), [m.t, H - m.b]).paddingInner(gap / (bh + gap));
+    const g = svg.selectAll('g.row').data(rows).join('g').attr('class', 'row').attr('transform', d => `translate(0,${yb(d.p)})`);
+    g.append('text').attr('x', m.l - 10).attr('y', yb.bandwidth() / 2).attr('dy', '0.35em').attr('text-anchor', 'end')
+      .attr('fill', d => d.p === 'Sénégal' ? 'var(--color-fg)' : 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').style('font-weight', d => d.p === 'Sénégal' ? 600 : 400).text(d => d.p);
+    g.append('rect').attr('x', m.l).attr('height', yb.bandwidth()).attr('rx', 4).attr('width', d => Math.max(2, x(d.v) - m.l))
+      .attr('fill', d => d.p === 'Sénégal' ? dash.colors[0] : 'var(--cds-chart-muted)');
+    g.append('text').attr('x', d => x(d.v) + 6).attr('y', yb.bandwidth() / 2).attr('dy', '0.35em').attr('fill', 'var(--color-fg)').style('font-size', 'var(--cds-font-size-caption)').style('font-variant-numeric', 'tabular-nums').text(d => SN.nf0.format(d.v));
+    box.style.minHeight = H + 'px';
+  }
+
+  function drawJalons(st) {
+    const tb = document.getElementById('tb-jalons');
+    tb.replaceChildren();
+    if (st.status !== 'ok') {
+      const tr = document.createElement('tr'); const td = document.createElement('td'); td.colSpan = 3;
+      if (st.status === 'error') { const d = document.createElement('div'); d.className = 'sn-fail'; d.textContent = 'Failed to load'; td.appendChild(d); }
+      else { td.className = 'dash-skeleton'; td.textContent = '—'; }
+      tr.appendChild(td); tb.appendChild(tr); return;
+    }
+    st.data.forEach(r => {
+      const tr = document.createElement('tr');
+      ['date', 'jalon', 'source'].forEach(k => { const td = document.createElement('td'); td.textContent = r[k]; tr.appendChild(td); });
+      tb.appendChild(tr);
+    });
+  }
+});
+</script>
+
+<script>
+dash.calc('prix_ecarts', {
+  title: 'Écart de prix',
+  description: "Écart du prix moyen des ménages avec les moyennes mondiale et africaine, en %.",
+  inputs: ['prix'],
+  fn: (prix) => [{
+    vs_monde: Math.round((Number(prix[0].pct_moyenne_mondiale) - 100) * 10) / 10,
+    vs_afrique: Math.round((Number(prix[0].pct_moyenne_afrique) - 100) * 10) / 10
+  }]
+});
+
+dash.onData(() => {
+  const SN = window.SN;
+  const root = document.getElementById('dash-root') || document;
+  const sets = { prix: dash.data('prix'), coupures: dash.data('coupures'), pertes: dash.data('pertes'), prix_ecarts: dash.data('prix_ecarts'), tarifs: dash.data('tarifs') };
+  const match = (rows, el) => {
+    if (el.dataset.row != null) return rows[Number(el.dataset.row)];
+    if (!el.dataset.where) return rows[0];
+    const conds = el.dataset.where.split('&').map(p => p.split('=').map(decodeURIComponent));
+    return rows.find(r => conds.every(([k, v]) => String(r[k]) === v));
+  };
+  ['prix', 'coupures', 'pertes', 'prix_ecarts'].forEach(id => {
+    const st = sets[id];
+    root.querySelectorAll(`[data-source="${id}"][data-field]`).forEach(el => {
+      if (st.status !== 'ok') { if (st.status === 'error') el.classList.remove('dash-skeleton'); return; }
+      el.classList.remove('dash-skeleton');
+      const r = match(st.data, el); const f = el.dataset.field;
+      if (!r || r[f] === '' || r[f] == null) { el.textContent = '—'; return; }
+      const v = Number(r[f]);
+      if (id === 'prix_ecarts') el.textContent = (v >= 0 ? '+' : '') + SN.nf0.format(v) + ' %';
+      else if (f === 'prix_usd_kwh') el.textContent = SN.nf2f.format(v);
+      else el.textContent = SN.nf1.format(v);
+    });
+  });
+
+  drawBars('ch-tarifs', sets.tarifs, st => st.data.map(r => ({
+    key: r.cle, group: r.categorie, label: r.plage, v: Number(r.prix_fcfa_kwh), hi: false
+  })), v => SN.nf2f.format(v), ' FCFA/kWh', true);
+
+  drawBars('ch-coupures', sets.coupures, st => st.data.filter(r => String(r.derniere) === '1').map(r => ({
+    key: r.code, group: null, label: r.libelle, v: Number(r.pct_entreprises), hi: r.code === 'SEN'
+  })).sort((a, b) => b.v - a.v), v => SN.nf1.format(v) + ' %', '', false);
+
+  function drawBars(boxId, st, prep, fmt, unit, grouped) {
+    const box = document.getElementById(boxId);
+    if (st.status === 'error') return SN.fail(box);
+    if (st.status !== 'ok') { box.classList.add('dash-skeleton'); return; }
+    box.classList.remove('dash-skeleton'); box.replaceChildren();
+    const rows = prep(st);
+    const W = box.clientWidth || 400, bh = 20, gap = 8, ghead = 22, m = { t: 2, r: 8, b: 4, l: 8 };
+    const groups = grouped ? [...new Set(rows.map(r => r.group))] : [null];
+    const H = m.t + m.b + rows.length * (bh + gap) + (grouped ? groups.length * ghead + (groups.length - 1) * 8 : 0);
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img');
+    const meas = (t, w) => { const n = svg.append('text').style('font-size', 'var(--cds-font-size-caption)').style('font-weight', w || 400).text(t); const l = n.node().getComputedTextLength(); n.remove(); return l; };
+    m.l = Math.ceil(d3.max(rows, r => meas(r.label, r.hi ? 600 : 400))) + 12;
+    m.r = Math.ceil(d3.max(rows, r => meas(fmt(r.v)))) + 10;
+    const x = d3.scaleLinear([0, d3.max(rows, r => r.v)], [m.l, W - m.r]);
+    let yy = m.t; const tp = SN.tip(box);
+    groups.forEach((g, gi) => {
+      if (grouped) {
+        if (gi) yy += 8;
+        svg.append('text').attr('x', 0).attr('y', yy + 14).attr('fill', 'var(--color-fg)').style('font-size', 'var(--cds-font-size-caption)').style('font-weight', 600).text(g);
+        yy += ghead;
+      }
+      rows.filter(r => r.group === g).forEach((r, i) => {
+        const row = svg.append('g').attr('transform', `translate(0,${yy})`);
+        const color = grouped ? dash.colors[gi] : (r.hi ? dash.colors[0] : 'var(--cds-chart-muted)');
+        row.append('text').attr('x', m.l - 10).attr('y', bh / 2).attr('dy', '0.35em').attr('text-anchor', 'end')
+          .attr('fill', r.hi || grouped ? 'var(--color-fg)' : 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').style('font-weight', r.hi ? 600 : 400).text(r.label);
+        row.append('rect').attr('x', m.l).attr('height', bh).attr('rx', 4).attr('width', Math.max(2, x(r.v) - m.l)).attr('fill', color)
+          .on('pointermove', ev => { const [px, py] = d3.pointer(ev, box); tp.show(px, py, grouped ? `${r.group} · ${r.label}` : r.label, [{ text: fmt(r.v) + unit }]); })
+          .on('pointerleave', () => tp.hide());
+        row.append('text').attr('x', x(r.v) + 6).attr('y', bh / 2).attr('dy', '0.35em').attr('fill', 'var(--color-fg)').style('font-size', 'var(--cds-font-size-caption)').style('font-variant-numeric', 'tabular-nums').text(fmt(r.v));
+        yy += bh + gap;
+      });
+    });
+    box.style.minHeight = H + 'px';
+  }
+});
+</script>
+</main>
+</body>
+</html>

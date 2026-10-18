@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Energy poverty scorecard: sub-Saharan Africa</title>
+<meta name="description" content="48 sub-Saharan African countries ranked on seven energy poverty criteria you can weight, from World Bank and Our World in Data figures.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Energy poverty scorecard: sub-Saharan Africa">
+<meta property="og:description" content="48 sub-Saharan African countries ranked on seven energy poverty criteria you can weight, from World Bank and Our World in Data figures.">
+<link rel="stylesheet" href="../assets/theme.css">
+<style>
+.sc { font-family: var(--font-sans); color: var(--color-fg); max-width: 76rem; margin-inline: auto; }
+.sc h1 { font-family: var(--font-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0 0 var(--cds-gap-xs); }
+.sc-take { font-size: var(--cds-font-size-body); color: var(--color-fg-muted); margin: 0 0 var(--cds-gap-lg); max-width: 52rem; line-height: 1.5; }
+.sc .sc-take b, .sc .sc-kpi b { font-weight: 600; color: var(--color-fg); }
+.sc-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: var(--cds-gap-md); margin-bottom: var(--cds-gap-md); }
+.sc-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); position: relative; min-width: 0; margin-bottom: var(--cds-gap-md); }
+.sc-kpis .sc-card, .sc-main .sc-card { margin-bottom: 0; }
+.sc-kpi .lbl { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.sc-kpi .val { font-family: var(--font-serif); font-weight: 400; font-size: var(--cds-font-size-title); font-variant-numeric: tabular-nums; margin: var(--cds-gap-xs) 0; min-height: 1.3em; }
+.sc-kpi .sub { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; line-height: 1.4; }
+.sc-main { display: grid; grid-template-columns: 1fr; gap: var(--cds-gap-md); margin-bottom: var(--cds-gap-md); align-items: start; }
+@media (min-width: 62rem) { .sc-main { grid-template-columns: minmax(17rem, 1fr) 2fr; } }
+.sc-card h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0 0 var(--cds-gap-xs); }
+.sc-note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0 0 var(--cds-gap-md); line-height: 1.45; }
+.sc-presets { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs); margin-bottom: var(--cds-gap-md); }
+.sc-btn { font: inherit; font-size: var(--cds-font-size-caption); color: var(--color-fg); background: transparent; border: 1px solid var(--color-border-line); border-radius: 999px; padding: 4px 10px; cursor: pointer; }
+.sc-btn[aria-pressed="true"] { background: var(--color-fg); color: var(--color-bg); border-color: var(--color-fg); }
+.sc-btn:focus-visible, .sc-link:focus-visible, .sc-table th button:focus-visible, .sc-search:focus-visible, .sc-slider input:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 2px; }
+.sc-slider { margin-bottom: var(--cds-gap-sm); }
+.sc-slider .top { display: flex; align-items: center; gap: 8px; font-size: var(--cds-font-size-caption); }
+.sc-slider .top i { width: 10px; height: 10px; border-radius: 2px; flex: none; }
+.sc-slider label { color: var(--color-fg); font-weight: 600; }
+.sc-slider .share { margin-left: auto; color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+.sc-slider .desc { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 2px 0 2px 18px; line-height: 1.35; }
+.sc-slider input { width: calc(100% - 18px); margin: 0 0 0 18px; accent-color: var(--color-fg); }
+.sc-chart { position: relative; min-height: 220px; }
+.sc-link { font: inherit; font-size: var(--cds-font-size-caption); background: none; border: none; color: var(--color-fg); text-decoration: underline; cursor: pointer; padding: 0; margin-top: var(--cds-gap-sm); }
+.sc-tip { position: absolute; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); pointer-events: none; white-space: nowrap; display: none; z-index: 3; font-variant-numeric: tabular-nums; }
+.sc-tip .t { color: var(--cds-text-secondary); margin-bottom: 2px; }
+.sc-tip .r { display: flex; align-items: center; gap: 6px; }
+.sc-tip i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+.sc-search { font: inherit; font-size: var(--cds-font-size-caption); padding: 6px 10px; border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); background: var(--color-bg); color: var(--color-fg); width: min(100%, 16rem); margin-bottom: var(--cds-gap-sm); }
+.sc-tablewrap { max-height: 32rem; overflow: auto; }
+.sc-table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+.sc-table th { position: sticky; top: 0; background: var(--color-panel); text-align: right; padding: 6px 8px; border-bottom: 1px solid var(--color-border-line); z-index: 1; vertical-align: bottom; }
+.sc-table th button { font: inherit; color: var(--color-fg-muted); background: none; border: none; padding: 0; cursor: pointer; font-weight: var(--cds-font-weight-medium); text-align: inherit; }
+.sc-table th[aria-sort="ascending"] button, .sc-table th[aria-sort="descending"] button { color: var(--color-fg); }
+.sc-table td { text-align: right; padding: 6px 8px; border-bottom: 1px solid var(--color-border-line); }
+.sc-table th:first-child, .sc-table td:first-child { text-align: left; }
+.sc-table tr[data-key="SEN"] td { font-weight: 600; }
+@media (max-width: 44rem) {
+  .sc-table th:nth-child(4), .sc-table td:nth-child(4),
+  .sc-table th:nth-child(8), .sc-table td:nth-child(8),
+  .sc-table th:nth-child(9), .sc-table td:nth-child(9) { display: none; }
+}
+@media (max-width: 30rem) {
+  .sc-table th:nth-child(5), .sc-table td:nth-child(5) { display: none; }
+  .sc-table th, .sc-table td { padding: 6px 5px; }
+}
+.sc-method { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.55; }
+.sc-method p { margin: 0 0 var(--cds-gap-xs); }
+.sc-method h2 { color: var(--color-fg); }
+.sc-method b { color: var(--color-fg); }
+.sc-fail { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: inherit; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.sc-fail::before { content: ""; width: .375rem; height: .375rem; border-radius: 50%; background: var(--color-bad); }
+.sc [data-dash-source-state=empty] { color: transparent; }
+.sc [data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+.sc svg text { font-family: var(--font-sans); }
+@media (prefers-reduced-motion: no-preference) {
+  .sc-anim { animation: sc-fade var(--cds-dur-slow) var(--cds-ease-out) both; }
+  @keyframes sc-fade { from { opacity: 0; } to { opacity: 1; } }
+}
+</style>
+<script src="../assets/vendor/d3.v7.9.0.min.js"></script>
+<script>
+window.DASH_CONFIG = {
+  "lang": "en",
+  "repo": "https://github.com/dibimaiga/energy-poverty-dashboards",
+  "params": {
+    "w_access": 3,
+    "w_rural": 1,
+    "w_cooking": 2,
+    "w_kwh": 2,
+    "w_people": 2,
+    "w_outages": 1,
+    "w_oil": 1
+  },
+  "datasets": {
+    "wb": {
+      "url": "../data/scorecard/ssa_world_bank_indicators.csv",
+      "title": "World Bank energy indicators",
+      "description": "Access to electricity (national, rural, urban), access to clean cooking, population and firms facing power outages for the 48 sub-Saharan African countries, latest values (World Bank update of October 8, 2026).",
+      "sources": [
+        {
+          "label": "Access to electricity",
+          "url": "https://data.worldbank.org/indicator/EG.ELC.ACCS.ZS?locations=ZG"
+        },
+        {
+          "label": "Clean cooking",
+          "url": "https://data.worldbank.org/indicator/EG.CFT.ACCS.ZS?locations=ZG"
+        },
+        {
+          "label": "Population",
+          "url": "https://data.worldbank.org/indicator/SP.POP.TOTL?locations=ZG"
+        },
+        {
+          "label": "Firms with outages",
+          "url": "https://data.worldbank.org/indicator/IC.ELC.OUTG.ZS"
+        }
+      ],
+      "extracted": "2026-10-17"
+    },
+    "owid": {
+      "url": "../data/scorecard/ssa_owid_electricity.csv",
+      "title": "Electricity use and mix",
+      "description": "Electricity demand (generation plus net imports), population and generation mix for the same 48 countries, latest year up to 2024.",
+      "sources": [
+        {
+          "label": "Our World in Data, energy-data (Energy Institute, Ember)",
+          "url": "https://github.com/owid/energy-data"
+        }
+      ],
+      "extracted": "2026-10-17"
+    }
+  }
+};
+</script>
+<script src="../assets/dash-lite.js"></script>
+</head>
+<body>
+<main id="dash-root">
+<nav class="ds-nav" style="max-width: 76rem"><a href="../">← All dashboards</a><a href="https://github.com/dibimaiga/energy-poverty-dashboards">Code and data on GitHub</a></nav>
+<div class="sc">
+  <header id="top">
+    <h1>Energy poverty scorecard: sub-Saharan Africa</h1>
+    <p class="sc-take" id="takeaway">
+      In 2024, <b class="sc-fill dash-skeleton" data-source="totals" data-field="people_without_m" data-fmt="1">—</b> million people across sub-Saharan Africa had no electricity.
+      With the default criteria, energy poverty is most acute in
+      <b class="sc-fill dash-skeleton" data-source="scores" data-field="country" data-where="rank=1" data-fmt="text">—</b>,
+      <b class="sc-fill dash-skeleton" data-source="scores" data-field="country" data-where="rank=2" data-fmt="text">—</b> and
+      <b class="sc-fill dash-skeleton" data-source="scores" data-field="country" data-where="rank=3" data-fmt="text">—</b>.
+      Senegal, the subject of PNP's documentary, ranks
+      <b class="sc-fill dash-skeleton" data-source="scores" data-field="rank" data-where="iso3=SEN" data-fmt="0">—</b> of
+      <b class="sc-fill" data-source="totals" data-field="countries_total" data-fmt="0">—</b>.
+    </p>
+  </header>
+
+  <section class="sc-kpis" id="headline">
+    <div class="sc-card sc-kpi">
+      <div class="lbl">People without electricity · 2024</div>
+      <div class="val"><span class="sc-fill dash-skeleton" data-source="totals" data-field="people_without_m" data-fmt="1">—</span> million</div>
+      <div class="sub">Nigeria alone: <span class="sc-fill" data-source="countries" data-field="people_without_m" data-where="iso3=NGA" data-fmt="p">—</span> million</div>
+    </div>
+    <div class="sc-card sc-kpi">
+      <div class="lbl">People without clean cooking · 2024</div>
+      <div class="val"><span class="sc-fill dash-skeleton" data-source="totals" data-field="people_without_cooking_m" data-fmt="1">—</span> million</div>
+      <div class="sub">They cook with wood, charcoal or other polluting fuels</div>
+    </div>
+    <div class="sc-card sc-kpi">
+      <div class="lbl">Countries where most people lack electricity</div>
+      <div class="val"><span class="sc-fill dash-skeleton" data-source="totals" data-field="countries_majority_without" data-fmt="0">—</span> of <span class="sc-fill" data-source="totals" data-field="countries_total" data-fmt="0">—</span></div>
+      <div class="sub">Access below half the population in 2024</div>
+    </div>
+    <div class="sc-card sc-kpi">
+      <div class="lbl">Electricity use per person, median country</div>
+      <div class="val"><span class="sc-fill dash-skeleton" data-source="totals" data-field="median_kwh" data-fmt="0">—</span> kWh</div>
+      <div class="sub">Senegal: <span class="sc-fill" data-source="countries" data-field="kwh_per_person" data-where="iso3=SEN" data-fmt="0">—</span> kWh · South Africa: <span class="sc-fill" data-source="countries" data-field="kwh_per_person" data-where="iso3=ZAF" data-fmt="0">—</span> kWh</div>
+    </div>
+  </section>
+
+  <section class="sc-main" id="ranking-section">
+    <div class="sc-card" id="criteria">
+      <h2>Set the criteria</h2>
+      <p class="sc-note">How much each criterion counts in the score. Start from a lens, then adjust the sliders.</p>
+      <div class="sc-presets" id="presets" role="group" aria-label="Lenses"></div>
+      <div id="sliders"></div>
+    </div>
+    <div class="sc-card" id="ranking">
+      <h2>Where energy poverty is most acute</h2>
+      <p class="sc-note">Weighted average of the criteria you set, each scored from 0 (least acute in the region) to 100 (most acute). Each bar shows how much each criterion contributes; colors match the criteria.</p>
+      <div class="sc-chart" id="ch-rank" data-source="scores"></div>
+      <button type="button" class="sc-link" id="toggle-all">Show all countries</button>
+    </div>
+  </section>
+
+  <section class="sc-card" id="access-vs-use">
+    <h2>High access does not mean enough electricity</h2>
+    <p class="sc-note">Each bubble is a country: share of people with electricity against electricity used per person (log scale). Bubble size shows the number of people without electricity.</p>
+    <div class="sc-chart" id="ch-scatter" data-source="countries"></div>
+  </section>
+
+  <section class="sc-card" id="all-countries">
+    <h2>All countries</h2>
+    <p class="sc-note">Latest available data. The score uses the default criteria. Click a column to sort.</p>
+    <input type="search" class="sc-search" id="search" placeholder="Search a country" aria-label="Search a country">
+    <div class="sc-tablewrap">
+      <table class="sc-table" data-source="countries" data-row-key="iso3">
+        <thead><tr>
+          <th data-field="country"><button type="button" data-sort="country">Country</button></th>
+          <th data-source="scores" data-field="score"><button type="button" data-sort="score">Score</button></th>
+          <th data-field="access_pct"><button type="button" data-sort="access_pct">Access %</button></th>
+          <th data-field="rural_access_pct"><button type="button" data-sort="rural_access_pct">Rural access %</button></th>
+          <th data-field="clean_cooking_pct"><button type="button" data-sort="clean_cooking_pct">Clean cooking %</button></th>
+          <th data-field="kwh_per_person"><button type="button" data-sort="kwh_per_person">kWh per person</button></th>
+          <th data-field="people_without_m"><button type="button" data-sort="people_without_m">Without power (M)</button></th>
+          <th data-field="firms_outages_pct"><button type="button" data-sort="firms_outages_pct">Firms with outages %</button></th>
+          <th data-field="oil_share_pct"><button type="button" data-sort="oil_share_pct">Oil share of power %</button></th>
+        </tr></thead>
+        <tbody id="tb"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sc-card sc-method" id="method">
+    <h2>Method and limits</h2>
+    <p><b>Sources.</b> World Bank World Development Indicators, downloaded from api.worldbank.org (update of October 8, 2026): access to electricity (national, rural, urban), access to clean cooking fuels and technologies, population, and firms experiencing electrical outages from the Enterprise Surveys. Our World in Data energy dataset: electricity demand (generation plus net imports) and oil's share of generation, mostly for 2024.</p>
+    <p><b>How the score works.</b> Each criterion is rescaled from 0 to 100 across the countries, where 100 is the most acute case in the region. Electricity use and the number of people affected are compared on a log scale, so the largest countries don't flatten all the others. A country's score is the weighted average of the criteria it has data for.</p>
+    <p><b>Data cleaning.</b> Chad's rural access rate is reported higher than its urban rate, so it is treated as missing. Outage surveys older than 2020 (Eritrea, Sudan) are left out.</p>
+    <p><b>Not included yet.</b> Oil and gas resources: no current cross-country source was available here, since OWID's production series stop in 2016 for most of these countries. Electricity prices: the World Bank indicators have no current, comparable tariff data. Fit with PNP's own work, such as partners on the ground, language or access for filming: that is for the team to add.</p>
+    <p><b>Reading the score.</b> It measures need, not opportunity: a high score says where energy poverty is most acute, not where advocacy would have the most effect. The default criteria are a starting point; changing them shows how much a ranking depends on what you value.</p>
+  </section>
+  <div id="dash-sources"></div>
+</div>
+
+<script>
+window.SC = (function () {
+  const fmt1 = new Intl.NumberFormat('en', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  const fmt0 = new Intl.NumberFormat('en', { maximumFractionDigits: 0 });
+  const fmtP = new Intl.NumberFormat('en', { maximumFractionDigits: 1 });
+  const DIMS = [
+    { key: 'w_access', s: 's_access', name: 'No electricity', desc: 'Share of people without electricity' },
+    { key: 'w_rural', s: 's_rural', name: 'Rural gap', desc: 'Share of rural people without electricity' },
+    { key: 'w_cooking', s: 's_cooking', name: 'No clean cooking', desc: 'Share relying on wood, charcoal or other polluting fuels' },
+    { key: 'w_kwh', s: 's_kwh', name: 'Low electricity use', desc: 'Electricity used per person, on a log scale' },
+    { key: 'w_people', s: 's_people', name: 'People affected', desc: 'Number of people without electricity, on a log scale' },
+    { key: 'w_outages', s: 's_outages', name: 'Unreliable supply', desc: 'Share of firms facing power outages' },
+    { key: 'w_oil', s: 's_oil', name: 'Costly oil-fired power', desc: "Oil's share of electricity generation" }
+  ];
+  const PRESETS = [
+    { id: 'default', name: 'Energy poverty', w: { w_access: 3, w_rural: 1, w_cooking: 2, w_kwh: 2, w_people: 2, w_outages: 1, w_oil: 1 } },
+    { id: 'scale', name: 'People affected', w: { w_access: 2, w_rural: 0, w_cooking: 1, w_kwh: 0, w_people: 4, w_outages: 0, w_oil: 0 } },
+    { id: 'reliability', name: 'Reliability and cost', w: { w_access: 1, w_rural: 0, w_cooking: 0, w_kwh: 2, w_people: 0, w_outages: 4, w_oil: 3 } },
+    { id: 'cooking', name: 'Clean cooking', w: { w_access: 1, w_rural: 0, w_cooking: 4, w_kwh: 0, w_people: 2, w_outages: 0, w_oil: 0 } }
+  ];
+  function tip(box) {
+    let t = box.querySelector('.sc-tip');
+    if (!t) { t = document.createElement('div'); t.className = 'sc-tip'; box.appendChild(t); }
+    return {
+      show(x, y, title, rows) {
+        t.replaceChildren();
+        const h = document.createElement('div'); h.className = 't'; h.textContent = title; t.appendChild(h);
+        rows.forEach((r) => {
+          const d = document.createElement('div'); d.className = 'r';
+          if (r.color) { const i = document.createElement('i'); i.style.background = r.color; d.appendChild(i); }
+          const s = document.createElement('span'); s.textContent = r.text; d.appendChild(s); t.appendChild(d);
+        });
+        t.style.display = 'block';
+        const bw = box.clientWidth, bh = box.clientHeight, tw = t.offsetWidth, th = t.offsetHeight;
+        let left = x + 14; if (left + tw > bw) left = Math.max(0, x - tw - 14);
+        let top = y - th - 10; if (top < 0) top = Math.min(y + 14, Math.max(0, bh - th));
+        t.style.left = left + 'px'; t.style.top = top + 'px';
+      },
+      hide() { t.style.display = 'none'; }
+    };
+  }
+  function fail(box) {
+    box.replaceChildren();
+    const d = document.createElement('div'); d.className = 'sc-fail'; d.textContent = 'Failed to load'; box.appendChild(d);
+  }
+  function styleAxis(g) {
+    g.attr('font-size', null).attr('font-family', null);
+    g.selectAll('text').attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)');
+    g.selectAll('.domain').attr('stroke', 'var(--cds-chart-axis)');
+    g.selectAll('.tick line').attr('stroke', 'var(--cds-chart-grid)');
+  }
+  const state = { weights: null, showAll: false, sort: { key: 'score', dir: -1 }, q: '', drawn: {} };
+  return { fmt1, fmt0, fmtP, DIMS, PRESETS, tip, fail, styleAxis, state };
+})();
+</script>
+
+<script>
+dash.calc('countries', {
+  title: 'Country indicators',
+  description: 'World Bank and OWID figures joined by country, with electricity use per person and people without electricity or clean cooking worked out; a rural rate above the urban rate and outage surveys before 2020 are left out.',
+  inputs: ['wb', 'owid'],
+  fn: (wb, owid) => {
+    const num = (v) => (v === '' || v == null || Number.isNaN(Number(v)) ? null : Number(v));
+    const byIso = Object.fromEntries(owid.map((r) => [r.iso3, r]));
+    return wb.map((r) => {
+      const o = byIso[r.iso3] || {};
+      const access = num(r.access_pct), rural = num(r.rural_access_pct), urban = num(r.urban_access_pct);
+      const cooking = num(r.clean_cooking_pct), pop = num(r.population_2024);
+      const demand = num(o.electricity_demand_twh), owidPop = num(o.population);
+      const surveyYear = num(r.outages_survey_year);
+      return {
+        iso3: r.iso3,
+        country: r.country,
+        access_pct: access,
+        rural_access_pct: rural != null && urban != null && rural > urban ? null : rural,
+        clean_cooking_pct: cooking,
+        kwh_per_person: demand != null && owidPop ? Math.round(demand * 1e9 / owidPop) : null,
+        people_without_m: pop != null && access != null ? Math.round(pop * (100 - access) / 1e7) / 10 : null,
+        people_without_cooking_m: pop != null && cooking != null ? Math.round(pop * (100 - cooking) / 1e7) / 10 : null,
+        firms_outages_pct: surveyYear != null && surveyYear >= 2020 ? num(r.firms_outages_pct) : null,
+        outages_survey_year: surveyYear,
+        oil_share_pct: num(o.oil_share_pct)
+      };
+    });
+  }
+});
+
+dash.calc('scores', {
+  title: 'Energy poverty scores',
+  description: 'Each criterion rescaled from 0 to 100 across the countries (100 = most acute), then averaged with the default weights over the criteria a country has data for.',
+  inputs: ['countries'],
+  fn: (countries) => {
+    const criteria = {
+      s_access: [(r) => (r.access_pct == null ? null : 100 - r.access_pct), 3],
+      s_rural: [(r) => (r.rural_access_pct == null ? null : 100 - r.rural_access_pct), 1],
+      s_cooking: [(r) => (r.clean_cooking_pct == null ? null : 100 - r.clean_cooking_pct), 2],
+      s_kwh: [(r) => (r.kwh_per_person ? -Math.log10(r.kwh_per_person) : null), 2],
+      s_people: [(r) => (r.people_without_m == null ? null : Math.log10(r.people_without_m + 0.1)), 2],
+      s_outages: [(r) => r.firms_outages_pct, 1],
+      s_oil: [(r) => r.oil_share_pct, 1]
+    };
+    const out = countries.map((r) => ({ iso3: r.iso3, country: r.country }));
+    for (const [key, [value]] of Object.entries(criteria)) {
+      const vals = countries.map(value);
+      const present = vals.filter((v) => v != null);
+      const lo = Math.min(...present), hi = Math.max(...present);
+      vals.forEach((v, i) => { out[i][key] = v == null ? null : Math.round((v - lo) / (hi - lo) * 1000) / 10; });
+    }
+    for (const r of out) {
+      const have = Object.keys(criteria).filter((k) => r[k] != null);
+      const weight = have.reduce((s, k) => s + criteria[k][1], 0);
+      r.score = Math.round(have.reduce((s, k) => s + criteria[k][1] * r[k], 0) / weight * 10) / 10;
+      r.coverage = have.length;
+    }
+    out.sort((a, b) => b.score - a.score || a.country.localeCompare(b.country));
+    out.forEach((r, i) => { r.rank = i + 1; });
+    return out;
+  }
+});
+
+dash.calc('totals', {
+  title: 'Regional totals',
+  description: 'Across the countries: people without electricity or clean cooking, countries where most people lack electricity, and the median electricity use per person.',
+  inputs: ['countries'],
+  fn: (countries) => {
+    const sum = (k) => Math.round(countries.reduce((s, r) => s + (r[k] == null ? 0 : r[k]), 0) * 10) / 10;
+    const kwh = countries.map((r) => r.kwh_per_person).filter((v) => v != null).sort((a, b) => a - b);
+    const m = Math.floor(kwh.length / 2);
+    const median = kwh.length % 2 ? kwh[m] : (kwh[m - 1] + kwh[m]) / 2;
+    return [{
+      countries_total: countries.length,
+      people_without_m: sum('people_without_m'),
+      people_without_cooking_m: sum('people_without_cooking_m'),
+      countries_majority_without: countries.filter((r) => r.access_pct != null && r.access_pct < 50).length,
+      median_kwh: Math.round(median)
+    }];
+  }
+});
+</script>
+
+<script>
+(function () {
+  const SC = window.SC;
+  const root = document.getElementById('dash-root') || document;
+  const color = (i) => dash.colors[i % dash.colors.length];
+
+  const readParams = () => {
+    const p = dash.params() || {};
+    const w = {};
+    SC.DIMS.forEach((d) => {
+      const v = Number(p[d.key]);
+      w[d.key] = Number.isFinite(v) ? Math.max(0, Math.min(5, v)) : SC.PRESETS[0].w[d.key];
+    });
+    return w;
+  };
+
+  // Criteria controls, built once
+  const presetBox = document.getElementById('presets');
+  SC.PRESETS.forEach((p) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'sc-btn'; b.textContent = p.name; b.dataset.preset = p.id;
+    b.addEventListener('click', () => {
+      if (p.id === 'default') dash.resetParams(); else dash.setParams({ ...p.w });
+      SC.state.weights = { ...p.w };
+      redraw();
+    });
+    presetBox.appendChild(b);
+  });
+  const sliderBox = document.getElementById('sliders');
+  SC.DIMS.forEach((d) => {
+    const wrap = document.createElement('div'); wrap.className = 'sc-slider';
+    const top = document.createElement('div'); top.className = 'top';
+    const sw = document.createElement('i'); sw.dataset.dim = d.key;
+    const label = document.createElement('label'); label.htmlFor = 'sl-' + d.key; label.textContent = d.name;
+    const share = document.createElement('span'); share.className = 'share'; share.id = 'share-' + d.key;
+    top.append(sw, label, share);
+    const desc = document.createElement('div'); desc.className = 'desc'; desc.textContent = d.desc;
+    const input = document.createElement('input');
+    input.type = 'range'; input.min = '0'; input.max = '5'; input.step = '1'; input.id = 'sl-' + d.key;
+    input.addEventListener('input', () => {
+      SC.state.weights[d.key] = Number(input.value);
+      dash.setParams({ [d.key]: Number(input.value) });
+      redraw();
+    });
+    wrap.append(top, desc, input);
+    sliderBox.appendChild(wrap);
+  });
+  document.getElementById('toggle-all').addEventListener('click', () => { SC.state.showAll = !SC.state.showAll; drawRank(); syncControls(); });
+  document.getElementById('search').addEventListener('input', (e) => { SC.state.q = e.target.value; drawTable(); });
+  root.querySelectorAll('.sc-table th button[data-sort]').forEach((b) => {
+    b.addEventListener('click', () => {
+      const key = b.dataset.sort;
+      const s = SC.state.sort;
+      SC.state.sort = s.key === key ? { key, dir: -s.dir } : { key, dir: key === 'country' ? 1 : -1 };
+      drawTable();
+    });
+  });
+
+  function syncControls() {
+    const w = SC.state.weights;
+    const total = SC.DIMS.reduce((s, d) => s + w[d.key], 0);
+    SC.DIMS.forEach((d, i) => {
+      const input = document.getElementById('sl-' + d.key);
+      if (input && document.activeElement !== input) input.value = String(w[d.key]);
+      const share = document.getElementById('share-' + d.key);
+      if (share) share.textContent = total ? Math.round(w[d.key] / total * 100) + '%' : '0%';
+      const sw = sliderBox.querySelector(`i[data-dim="${d.key}"]`);
+      if (sw) sw.style.background = color(i);
+    });
+    presetBox.querySelectorAll('button').forEach((b) => {
+      const p = SC.PRESETS.find((x) => x.id === b.dataset.preset);
+      const on = SC.DIMS.every((d) => p.w[d.key] === w[d.key]);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    document.getElementById('toggle-all').textContent = SC.state.showAll ? 'Show the top 15 only' : 'Show all countries';
+  }
+
+  function match(rows, el) {
+    if (el.dataset.row != null) return rows[Number(el.dataset.row)];
+    if (!el.dataset.where) return rows[0];
+    const conds = el.dataset.where.split('&').map((p) => p.split('=').map(decodeURIComponent));
+    return rows.find((r) => conds.every(([k, v]) => String(r[k]) === v));
+  }
+
+  function fillMarks() {
+    root.querySelectorAll('.sc-fill[data-source]').forEach((el) => {
+      const st = dash.data(el.dataset.source);
+      if (st.status !== 'ok') { if (st.status === 'error') el.classList.remove('dash-skeleton'); return; }
+      el.classList.remove('dash-skeleton');
+      const rows = Array.isArray(st.data) ? st.data : [];
+      const r = match(rows, el);
+      const v = r ? r[el.dataset.field] : null;
+      if (v == null || v === '') { el.textContent = '—'; return; }
+      const f = el.dataset.fmt;
+      el.textContent = f === 'text' ? String(v) : f === '1' ? SC.fmt1.format(Number(v)) : f === 'p' ? SC.fmtP.format(Number(v)) : SC.fmt0.format(Number(v));
+    });
+  }
+
+  function drawRank() {
+    const box = document.getElementById('ch-rank');
+    const st = dash.data('scores');
+    if (st.status === 'error') { SC.fail(box); return; }
+    if (st.status !== 'ok') { box.classList.add('dash-skeleton'); return; }
+    box.classList.remove('dash-skeleton');
+    box.replaceChildren();
+    const w = SC.state.weights;
+    if (!SC.DIMS.some((d) => w[d.key] > 0)) {
+      const p = document.createElement('p'); p.className = 'sc-note'; p.textContent = 'Give at least one criterion a weight above zero.';
+      box.appendChild(p); return;
+    }
+    const ranked = st.data.map((r) => {
+      const have = SC.DIMS.filter((d) => r[d.s] != null && w[d.key] > 0);
+      const den = have.reduce((s, d) => s + w[d.key], 0);
+      const parts = SC.DIMS.map((d, i) => ({ i, d, v: den && r[d.s] != null && w[d.key] > 0 ? w[d.key] * r[d.s] / den : 0 }));
+      return { iso3: r.iso3, country: r.country, parts, score: parts.reduce((s, p) => s + p.v, 0) };
+    }).sort((a, b) => b.score - a.score || a.country.localeCompare(b.country));
+    ranked.forEach((r, i) => { r.rank = i + 1; });
+    const items = SC.state.showAll ? ranked.slice() : ranked.slice(0, 15);
+    const sen = ranked.find((r) => r.iso3 === 'SEN');
+    if (!SC.state.showAll && sen && sen.rank > 15) items.push(null, sen);
+
+    const W = box.clientWidth || 600, bh = 18, gp = 8;
+    const H = items.length * (bh + gp) + 4;
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`)
+      .attr('role', 'img').attr('aria-label', 'Countries ranked by energy poverty score with the chosen criteria');
+    const meas = (t, wt) => {
+      const n = svg.append('text').style('font-size', 'var(--cds-font-size-caption)').style('font-weight', wt || 400).text(t);
+      const l = n.node().getComputedTextLength(); n.remove(); return l;
+    };
+    const rankW = Math.ceil(meas(String(ranked.length))) + 10;
+    const nameW = Math.ceil(d3.max(items.filter(Boolean), (r) => meas(r.country, r.iso3 === 'SEN' ? 600 : 400))) + 12;
+    const valW = Math.ceil(meas('100.0')) + 10;
+    const x0 = rankW + nameW;
+    const x = d3.scaleLinear([0, 100], [x0, Math.max(x0 + 40, W - valW)]);
+    svg.append('g').selectAll('line').data([25, 50, 75, 100]).join('line')
+      .attr('x1', (d) => x(d)).attr('x2', (d) => x(d)).attr('y1', 0).attr('y2', H).attr('stroke', 'var(--cds-chart-grid)');
+    const tp = SC.tip(box);
+    const layer = svg.append('g').attr('class', SC.state.drawn.rank ? '' : 'sc-anim');
+    let y = 2;
+    items.forEach((r) => {
+      if (!r) {
+        layer.append('text').attr('x', rankW).attr('y', y + bh / 2).attr('dy', '0.35em').attr('fill', 'var(--color-fg-muted)')
+          .style('font-size', 'var(--cds-font-size-caption)').text('…');
+        y += bh + gp; return;
+      }
+      const isSen = r.iso3 === 'SEN';
+      const g = layer.append('g').attr('transform', `translate(0,${y})`);
+      if (isSen) g.append('rect').attr('x', 0).attr('y', -gp / 2).attr('width', W).attr('height', bh + gp).attr('rx', 4).attr('fill', 'var(--cds-chart-grid)');
+      g.append('text').attr('x', rankW - 10).attr('y', bh / 2).attr('dy', '0.35em').attr('text-anchor', 'end')
+        .attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').style('font-variant-numeric', 'tabular-nums').text(r.rank);
+      g.append('text').attr('x', rankW).attr('y', bh / 2).attr('dy', '0.35em').attr('fill', 'var(--color-fg)')
+        .style('font-size', 'var(--cds-font-size-caption)').style('font-weight', isSen ? 600 : 400).text(r.country);
+      let cx = x(0);
+      r.parts.forEach((p) => {
+        if (p.v <= 0) return;
+        const wpx = x(p.v) - x(0);
+        g.append('rect').attr('x', cx).attr('y', 0).attr('width', Math.max(0, wpx - 1)).attr('height', bh).attr('fill', color(p.i));
+        cx += wpx;
+      });
+      g.append('text').attr('x', cx + 6).attr('y', bh / 2).attr('dy', '0.35em').attr('fill', 'var(--color-fg)')
+        .style('font-size', 'var(--cds-font-size-caption)').style('font-variant-numeric', 'tabular-nums').text(SC.fmt1.format(r.score));
+      g.append('rect').attr('x', 0).attr('y', -gp / 2).attr('width', W).attr('height', bh + gp).attr('fill', 'transparent')
+        .on('pointermove', (ev) => {
+          const [px, py] = d3.pointer(ev, box);
+          const lines = r.parts.filter((p) => p.v > 0).sort((a, b) => b.v - a.v)
+            .map((p) => ({ color: color(p.i), text: `${p.d.name}: ${SC.fmt1.format(p.v)}` }));
+          tp.show(px, py, `${r.rank}. ${r.country} · score ${SC.fmt1.format(r.score)}`, lines);
+        })
+        .on('pointerleave', () => tp.hide());
+      y += bh + gp;
+    });
+    SC.state.drawn.rank = true;
+    box.style.minHeight = H + 'px';
+  }
+
+  function drawScatter() {
+    const box = document.getElementById('ch-scatter');
+    const st = dash.data('countries');
+    if (st.status === 'error') { SC.fail(box); return; }
+    if (st.status !== 'ok') { box.classList.add('dash-skeleton'); return; }
+    box.classList.remove('dash-skeleton');
+    box.replaceChildren();
+    const pts = st.data.filter((r) => r.access_pct != null && r.kwh_per_person);
+    const W = box.clientWidth || 600;
+    const H = Math.round(Math.max(300, Math.min(440, W * 0.55)));
+    const m = { t: 22, r: 18, b: 40, l: 8 };
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`)
+      .attr('role', 'img').attr('aria-label', 'Access to electricity against electricity use per person, by country');
+    const y = d3.scaleLog([10, 10000], [H - m.b, m.t]);
+    const gy = svg.append('g').call(d3.axisLeft(y).tickValues([10, 100, 1000, 10000]).tickFormat(d3.format(',')).tickSize(0));
+    SC.styleAxis(gy);
+    m.l = Math.ceil(gy.node().getBBox().width) + 12;
+    gy.attr('transform', `translate(${m.l - 6},0)`); gy.select('.domain').remove();
+    const x = d3.scaleLinear([0, 100], [m.l, W - m.r]);
+    const grid = svg.insert('g', ':first-child');
+    grid.selectAll('line.h').data([10, 100, 1000, 10000]).join('line').attr('class', 'h')
+      .attr('x1', m.l).attr('x2', W - m.r).attr('y1', (d) => y(d)).attr('y2', (d) => y(d)).attr('stroke', 'var(--cds-chart-grid)');
+    const gx = svg.append('g').attr('transform', `translate(0,${H - m.b})`)
+      .call(d3.axisBottom(x).tickValues([0, 25, 50, 75, 100]).tickFormat((d) => d + '%').tickSizeOuter(0));
+    SC.styleAxis(gx);
+    svg.append('text').attr('x', (m.l + W - m.r) / 2).attr('y', H - 4).attr('text-anchor', 'middle')
+      .attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text('Share of people with electricity');
+    svg.append('text').attr('x', m.l).attr('y', 12).attr('fill', 'var(--color-fg-muted)')
+      .style('font-size', 'var(--cds-font-size-caption)').text('kWh per person');
+    const rmax = d3.max(pts, (d) => d.people_without_m || 0) || 1;
+    const r = d3.scaleSqrt([0, rmax], [2.5, Math.max(12, Math.min(26, W / 28))]);
+    const tp = SC.tip(box);
+    const sorted = pts.slice().sort((a, b) => (b.people_without_m || 0) - (a.people_without_m || 0));
+    const dots = svg.append('g').attr('class', SC.state.drawn.scatter ? '' : 'sc-anim');
+    dots.selectAll('circle').data(sorted).join('circle')
+      .attr('cx', (d) => x(d.access_pct)).attr('cy', (d) => y(d.kwh_per_person)).attr('r', (d) => r(d.people_without_m || 0))
+      .attr('fill', (d) => (d.iso3 === 'SEN' ? color(1) : color(0)))
+      .attr('fill-opacity', (d) => (d.iso3 === 'SEN' ? 0.9 : 0.3))
+      .attr('stroke', (d) => (d.iso3 === 'SEN' ? color(1) : color(0))).attr('stroke-width', 1)
+      .on('pointermove', (ev, d) => {
+        const [px, py] = d3.pointer(ev, box);
+        tp.show(px, py, d.country, [
+          { text: `Access: ${SC.fmtP.format(d.access_pct)}%` },
+          { text: `Use: ${SC.fmt0.format(d.kwh_per_person)} kWh per person` },
+          { text: `Without electricity: ${SC.fmtP.format(d.people_without_m || 0)} million` }
+        ]);
+      })
+      .on('pointerleave', () => tp.hide());
+    const LABELS = W < 600 ? ['SEN', 'NGA', 'COD', 'ZAF', 'SSD'] : ['SEN', 'NGA', 'COD', 'ETH', 'ZAF', 'COM', 'SSD', 'GHA'];
+    const placed = [];
+    pts.filter((d) => LABELS.includes(d.iso3))
+      .map((d) => ({ d, x: x(d.access_pct) + r(d.people_without_m || 0) + 4, y: y(d.kwh_per_person) }))
+      .sort((a, b) => a.y - b.y)
+      .forEach((l) => {
+        const t = svg.append('text').attr('fill', 'var(--color-fg)').style('font-size', 'var(--cds-font-size-caption)')
+          .style('font-weight', l.d.iso3 === 'SEN' ? 600 : 400).text(l.d.country);
+        const tw = t.node().getComputedTextLength();
+        let lx = l.x, ly = l.y + 4;
+        if (lx + tw > W - m.r) lx = x(l.d.access_pct) - r(l.d.people_without_m || 0) - 4 - tw;
+        for (let k = 0; k < 6 && placed.some((p) => lx < p.x + p.w && lx + tw > p.x && Math.abs(ly - p.y) < 13); k++) ly += 13;
+        t.attr('x', lx).attr('y', ly);
+        placed.push({ x: lx, y: ly, w: tw });
+      });
+    SC.state.drawn.scatter = true;
+    box.style.minHeight = H + 'px';
+  }
+
+  const COLS = [
+    ['country', 'text'], ['score', '1'], ['access_pct', '1'], ['rural_access_pct', '1'], ['clean_cooking_pct', 'p'],
+    ['kwh_per_person', '0'], ['people_without_m', '1'], ['firms_outages_pct', '1'], ['oil_share_pct', '1']
+  ];
+  function drawTable() {
+    const tb = document.getElementById('tb');
+    const st = dash.data('countries'), sc = dash.data('scores');
+    tb.replaceChildren();
+    if (st.status !== 'ok' || sc.status !== 'ok') {
+      const tr = document.createElement('tr'); const td = document.createElement('td'); td.colSpan = COLS.length;
+      if (st.status === 'error' || sc.status === 'error') { const d = document.createElement('div'); d.className = 'sc-fail'; d.textContent = 'Failed to load'; td.appendChild(d); }
+      else { td.className = 'dash-skeleton'; td.textContent = '—'; }
+      tr.appendChild(td); tb.appendChild(tr); return;
+    }
+    const score = Object.fromEntries(sc.data.map((r) => [r.iso3, r.score]));
+    const q = SC.state.q.trim().toLowerCase();
+    let rows = st.data.map((r) => ({ ...r, score: score[r.iso3] }));
+    if (q) rows = rows.filter((r) => String(r.country).toLowerCase().includes(q));
+    const { key, dir } = SC.state.sort;
+    rows.sort((a, b) => {
+      const va = a[key], vb = b[key];
+      if (va == null && vb == null) return 0;
+      if (va == null) return 1;
+      if (vb == null) return -1;
+      return (typeof va === 'string' ? va.localeCompare(vb) : va - vb) * dir;
+    });
+    rows.forEach((r) => {
+      const tr = document.createElement('tr');
+      tr.dataset.key = r.iso3;
+      COLS.forEach(([k, f]) => {
+        const td = document.createElement('td');
+        const v = r[k];
+        td.textContent = v == null ? '—' : f === 'text' ? String(v) : f === '1' ? SC.fmt1.format(v) : f === 'p' ? SC.fmtP.format(v) : SC.fmt0.format(v);
+        tr.appendChild(td);
+      });
+      tb.appendChild(tr);
+    });
+    root.querySelectorAll('.sc-table th').forEach((th) => {
+      const b = th.querySelector('button[data-sort]');
+      th.setAttribute('aria-sort', b && b.dataset.sort === key ? (dir > 0 ? 'ascending' : 'descending') : 'none');
+    });
+  }
+
+  function redraw() {
+    fillMarks();
+    syncControls();
+    drawRank();
+    drawScatter();
+    drawTable();
+  }
+
+  dash.onData(() => {
+    const focused = document.activeElement && document.activeElement.matches && document.activeElement.matches('.sc-slider input');
+    if (!SC.state.weights || !focused) SC.state.weights = readParams();
+    redraw();
+  });
+})();
+</script>
+</main>
+</body>
+</html>

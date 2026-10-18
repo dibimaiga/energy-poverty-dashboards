@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Energy poverty dashboards</title>
+<meta name="description" content="Two dashboards on access to electricity in Africa, built from public data with open code: Senegal in numbers, and a scorecard of 48 sub-Saharan African countries.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Energy poverty dashboards">
+<meta property="og:description" content="Access to electricity in Africa, from public data with open code.">
+<link rel="stylesheet" href="assets/theme.css">
+<style>
+.home { max-width: 60rem; margin: 0 auto; padding: clamp(28px, 6vw, 72px) clamp(16px, 4vw, 40px) 48px; }
+.home h1 { font-family: var(--font-serif); font-weight: 400; font-size: clamp(1.75rem, 4vw, 2.5rem); line-height: 1.15; margin: 0 0 var(--cds-gap-sm); }
+.home .lede { font-size: 1rem; color: var(--color-fg-muted); max-width: 42rem; margin: 0 0 var(--cds-gap-xl); line-height: 1.55; }
+.home .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: var(--cds-gap-md); }
+.home .card { display: flex; flex-direction: column; gap: var(--cds-gap-sm); background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg) calc(var(--cds-pad-lg) * 1.25); color: var(--color-fg); text-decoration: none; transition: border-color var(--cds-dur-slow) var(--cds-ease-out); }
+.home .card:hover { border-color: var(--color-fg-muted); }
+.home .card .tag { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.home .card h2 { font-family: var(--font-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; }
+.home .card p { margin: 0; color: var(--color-fg-muted); line-height: 1.5; }
+.home .card .go { margin-top: auto; padding-top: var(--cds-gap-sm); font-weight: 500; color: var(--color-link); }
+.home .notes { margin-top: var(--cds-gap-xl); padding-top: var(--cds-gap-md); border-top: 1px solid var(--color-border-line); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.6; }
+.home .notes p { margin: 0 0 var(--cds-gap-xs); }
+</style>
+</head>
+<body>
+<main class="home">
+  <h1>Energy poverty dashboards</h1>
+  <p class="lede">Two dashboards on access to electricity in Africa, built from public data. Every figure can be downloaded and traced back to its source, and the code that builds the data is open.</p>
+
+  <div class="cards">
+    <a class="card" href="senegal/">
+      <span class="tag">Senegal · in French</span>
+      <h2>Sénégal : énergie en chiffres</h2>
+      <p>Access to electricity in cities and rural areas, the power mix, electricity prices and outages, and the move to domestic gas.</p>
+      <span class="go">Open the dashboard →</span>
+    </a>
+    <a class="card" href="scorecard/">
+      <span class="tag">Sub-Saharan Africa · 48 countries</span>
+      <h2>Energy poverty scorecard</h2>
+      <p>Countries ranked on seven criteria, from access and clean cooking to outages and oil-fired power, with weights you can adjust.</p>
+      <span class="go">Open the scorecard →</span>
+    </a>
+  </div>
+
+  <div class="notes">
+    <p><b>Sources.</b> World Bank World Development Indicators and Enterprise Surveys, Our World in Data (Energy Institute, Ember), Senelec tariffs published by Senegal's regulator (CRSE), GlobalPetrolPrices, and press reports for the gas milestones. Each dashboard lists its sources and links to its data files.</p>
+    <p><b>Independence.</b> This is an independent analysis of public data. It is not affiliated with or endorsed by Prosperity, Not Poverty or any other organization.</p>
+    <p><b>Code and data.</b> <a href="https://github.com/dibimaiga/energy-poverty-dashboards">github.com/dibimaiga/energy-poverty-dashboards</a></p>
+  </div>
+</main>
+</body>
+</html>

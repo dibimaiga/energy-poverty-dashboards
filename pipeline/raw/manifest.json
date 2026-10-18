@@ -1,0 +1,12 @@
+{
+  "worldbank": {
+    "fetched_at": "2026-10-17",
+    "api": "https://api.worldbank.org/v2",
+    "world_bank_lastupdated": "2026-10-08"
+  },
+  "owid": {
+    "fetched_at": "2026-10-17T15:40:17Z",
+    "commit": "f8de88a4f6f9cab44f1cf606047cbd6c4414042c",
+    "url": "https://raw.githubusercontent.com/owid/energy-data/f8de88a4f6f9cab44f1cf606047cbd6c4414042c/owid-energy-data.csv"
+  }
+}

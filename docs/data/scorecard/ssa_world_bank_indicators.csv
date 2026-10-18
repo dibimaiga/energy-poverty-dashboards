@@ -1,0 +1,49 @@
+iso3,country,income_group,access_pct,access_year,rural_access_pct,urban_access_pct,clean_cooking_pct,clean_cooking_year,population_2024,firms_outages_pct,outages_survey_year,gdp_per_capita_usd
+AGO,Angola,Lower middle income,55.5,2024,1.3,78,56,2024,37885849,61.4,2024,3129
+BDI,Burundi,Low income,20.1,2024,3.6,70,0,2024,14047786,93.9,2025,234
+BEN,Benin,Lower middle income,59,2024,45,71.6,8,2024,14462724,86.1,2024,1658
+BFA,Burkina Faso,Low income,34,2024,12.7,87.8,18,2024,23548781,92.5,2024,1148
+BWA,Botswana,Upper middle income,80.2,2024,45.9,96.7,71,2024,2521139,64.2,2023,7778
+CAF,Central African Republic,Low income,18.2,2024,2,38.8,1,2024,5330690,89.3,2023,556
+CIV,Côte d'Ivoire,Lower middle income,72.9,2024,47.7,94.3,48,2024,31934230,80.3,2023,3050
+CMR,Cameroon,Lower middle income,72,2024,42.7,95.6,32,2024,29123744,93.3,2024,1972
+COD,DR Congo,Low income,22.5,2024,1,55,5,2024,109276265,77.4,2024,807
+COG,Republic of the Congo,Lower middle income,53,2024,19.4,72,40,2024,6332961,77.1,2024,2515
+COM,Comoros,Lower middle income,91.7,2024,88.2,98.5,11,2024,866628,91.7,2025,2056
+CPV,Cabo Verde,Upper middle income,98.4,2024,97.7,98.6,89,2024,524877,39.6,2024,5796
+ERI,Eritrea,Low income,55.3,2024,43.2,78.1,21,2024,3535603,20.5,2009,
+ETH,Ethiopia,Low income,56.6,2024,44.8,95.1,7,2024,132059767,85.9,2025,933
+GAB,Gabon,Upper middle income,95.1,2024,51.3,99,93,2024,2538952,87.1,2025,8263
+GHA,Ghana,Lower middle income,91.9,2024,82.6,98.6,35,2024,34427414,73.8,2023,3257
+GIN,Guinea,Lower middle income,53.8,2024,29.4,93.6,2,2024,14754785,91.1,2025,1877
+GMB,The Gambia,Low income,69,2024,39.2,85.6,3,2024,2759988,86.9,2023,919
+GNB,Guinea-Bissau,Low income,43.7,2024,24.9,65.6,2,2024,2201352,72.2,2025,1124
+GNQ,Equatorial Guinea,Upper middle income,65.1,2024,5.1,89.3,50,2024,1892516,33.3,2024,6615
+KEN,Kenya,Lower middle income,77,2024,67.1,98.1,32,2024,56432944,74.6,2025,2363
+LBR,Liberia,Low income,34.9,2024,9.2,55.5,1,2024,5612817,64.5,2025,915
+LSO,Lesotho,Lower middle income,60.6,2024,41.4,85.2,58,2024,2337423,64.6,2023,1089
+MDG,Madagascar,Low income,42.5,2024,26.5,75.9,2,2024,31964956,52.4,2022,599
+MLI,Mali,Low income,49.5,2024,31.4,88.6,2,2024,24478595,87.1,2024,1193
+MOZ,Mozambique,Low income,36.9,2024,12.3,79.8,8,2024,34631766,58.8,2025,627
+MRT,Mauritania,Lower middle income,52.2,2024,,94.2,56,2024,5169395,84.3,2025,2198
+MUS,Mauritius,Upper middle income,100,2024,100,100,99,2024,1245779,40.4,2023,12991
+MWI,Malawi,Low income,15.6,2024,6.4,59.5,2,2024,21655286,89.1,2025,672
+NAM,Namibia,Lower middle income,59.3,2024,41.1,77.2,46,2024,3030131,53.7,2024,4876
+NER,Niger,Low income,21.3,2024,10.8,69.1,6,2024,27032412,75.1,2025,775
+NGA,Nigeria,Lower middle income,62.5,2024,23.5,85.5,28,2024,232679478,82.5,2025,1224
+RWA,Rwanda,Low income,72,2024,65.2,88,9,2024,14256567,60.6,2023,1124
+SDN,Sudan,Low income,66,2024,54.2,87.9,47,2024,50448963,93.7,2014,1165
+SEN,Senegal,Lower middle income,82.9,2024,67.1,95.7,39,2024,18501984,55.0,2024,1955
+SLE,Sierra Leone,Low income,39.2,2024,24.9,56.4,2,2024,8642022,66.2,2023,846
+SOM,Somalia,Low income,54.4,2024,24.4,73.4,5,2024,19009151,52.6,2025,661
+SSD,South Sudan,Low income,5.4,2024,0.7,22.8,0,2024,11943408,68.4,2024,
+STP,São Tomé and Príncipe,Lower middle income,77.7,2024,75.1,78.9,7,2024,235536,75.7,2025,4084
+SWZ,Eswatini,Lower middle income,89.3,2024,88.3,92.1,56,2024,1242822,58.5,2024,4108
+SYC,Seychelles,High income,100,2024,100,100,99,2024,121354,38.3,2023,19449
+TCD,Chad,Low income,13.4,2024,100,51,11,2024,20299123,96.2,2023,1022
+TGO,Togo,Lower middle income,61.1,2024,33.9,96,15,2024,8406558,86.1,2023,1384
+TZA,Tanzania,Lower middle income,52.4,2024,33.7,85.2,11,2024,68560157,34.1,2023,1319
+UGA,Uganda,Low income,55.3,2024,44.8,78.3,2,2024,50015092,79.9,2025,1206
+ZAF,South Africa,Upper middle income,90.2,2024,86.3,92.4,90,2024,64007187,92.0,2020,6598
+ZMB,Zambia,Lower middle income,53.6,2024,31.3,80.3,10,2024,21314956,89.6,2025,1318
+ZWE,Zimbabwe,Lower middle income,62,2024,46.6,85.1,37,2024,16634373,52.5,2025,3021
